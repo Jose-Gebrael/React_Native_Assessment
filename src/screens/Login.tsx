@@ -4,12 +4,10 @@ import styles from './Login.styles';
 import {Button} from '../components/atoms/Button';
 import {TextInput} from '../components/atoms/TextInput';
 import {Title} from '../components/atoms/Title';
-import Feather from 'react-native-vector-icons/Feather';
 
 export default function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [passwordVisible, setPasswordVisible] = useState(false);
 
   return (
     <View style={styles.container}>
