@@ -1,26 +1,26 @@
-// src/screens/Login.styles.ts
 import {StyleSheet} from 'react-native';
 import globalStyles from '../details/styles/globalStyles';
+import globalColors from '../details/styles/globalColors';
 
 const styles = StyleSheet.create({
   container: {
     ...globalStyles.container,
-    paddingHorizontal: 20,
+    paddingHorizontal: 30,
     justifyContent: 'center',
   },
   subtitle: {
     fontSize: 16,
     textAlign: 'center',
-    color: '#ccc',
+    color: globalColors.textColor,
     marginBottom: 20,
   },
   footerText: {
     textAlign: 'center',
-    color: '#ccc',
+    color: globalColors.textColor,
     marginTop: 12,
   },
   linkText: {
-    color: '#4CAF50',
+    color: globalColors.textLinkColor,
     fontWeight: 'bold',
   },
 });

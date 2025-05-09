@@ -1,5 +1,11 @@
-import React, { useState } from 'react';
-import { TextInput as RNTextInput, TextInputProps, View, TouchableOpacity } from 'react-native';
+import React, {useState} from 'react';
+import globalColors from '../../../details/styles/globalColors';
+import {
+  TextInput as RNTextInput,
+  TextInputProps,
+  View,
+  TouchableOpacity,
+} from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
 import styles from './TextInput.styles';
 
@@ -18,11 +24,12 @@ export default function TextInput({
   return (
     <View style={styles.inputContainer}>
       {iconName && <Feather name={iconName} size={20} style={styles.icon} />}
-      
+
       <RNTextInput
         style={styles.input}
         {...props}
         secureTextEntry={isPassword && !passwordVisible} // Toggle secure text based on state
+        placeholderTextColor={globalColors.placeholderTextColor} // Setting placeholder color
       />
 
       {isPassword && (

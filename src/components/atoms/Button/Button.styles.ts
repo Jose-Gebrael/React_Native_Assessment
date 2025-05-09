@@ -1,15 +1,16 @@
 import { StyleSheet } from 'react-native';
+import globalColors from '../../../details/styles/globalColors';
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: '#4CAF50',
+    backgroundColor: globalColors.blueButton,
     padding: 12,
-    borderRadius: 8,
+    borderRadius: 15,
     alignItems: 'center',
     marginTop: 16,
   },
   buttonText: {
-    color: '#fff',
+    color: globalColors.buttonTextColor,
     fontSize: 16,
     fontWeight: '600',
   },
