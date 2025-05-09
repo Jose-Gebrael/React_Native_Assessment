@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
-import { View, Text } from 'react-native';
+import React, {useState} from 'react';
+import {View, Text} from 'react-native';
 import styles from './Login.styles';
-import { Button } from '../components/atoms/Button';
-import { TextInput } from '../components/atoms/TextInput';
-import { Title } from '../components/atoms/Title';
+import {Button} from '../components/atoms/Button';
+import {TextInput} from '../components/atoms/TextInput';
+import {Title} from '../components/atoms/Title';
+import Feather from 'react-native-vector-icons/Feather';
 
 export default function Login() {
   const [username, setUsername] = useState('');
@@ -22,13 +23,13 @@ export default function Login() {
         onChangeText={setUsername}
       />
 
-      <TextInput
-        iconName="lock"
-        placeholder="Enter your password"
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry={!passwordVisible}
-      />
+        <TextInput
+          iconName="lock"
+          placeholder="Enter your password"
+          value={password}
+          onChangeText={setPassword}
+          isPassword={true}
+        />
 
       <Button title="Sign In" onPress={() => {}} />
 
