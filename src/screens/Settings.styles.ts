@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import {StyleSheet, PixelRatio} from 'react-native';
 import globalStyles from '../details/styles/globalStyles';
 import globalColors from '../details/styles/globalColors';
 
@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     fontFamily: 'GothamBook',
-    fontSize: 16,
+    fontSize: PixelRatio.get() * 8,
     textAlign: 'left',
     color: globalColors.textColor,
   },

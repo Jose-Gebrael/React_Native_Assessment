@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import {StyleSheet, Dimensions, PixelRatio} from 'react-native';
 import globalStyles from '../details/styles/globalStyles';
 import globalColors from '../details/styles/globalColors';
 
@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
   },
   productImage: {
     width: '100%',
-    height: 350,
+    height: Dimensions.get('window').height * 0.5,
     marginBottom: 15,
   },
   detailsContainer: {
@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     fontFamily: 'GothamBook',
-    fontSize: 16,
+    fontSize: PixelRatio.get() * 8,
     textAlign: 'left',
     color: globalColors.textColor,
     marginBottom: 5,

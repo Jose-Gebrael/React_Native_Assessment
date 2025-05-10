@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, Image, ScrollView, TouchableOpacity} from 'react-native';
+import {View, Text, Image, ScrollView, TouchableOpacity, Dimensions} from 'react-native';
 import {useRoute, RouteProp, useNavigation} from '@react-navigation/native';
 import productsData from '../assets/data/Products.json';
 import {Product} from '../types/product.types';
@@ -53,7 +53,7 @@ export default function ProductDetails() {
           style={styles.productImage}
         />
 
-        <Title text={product.title} textAlign="left" style={{width: '50%'}} />
+        <Title text={product.title} textAlign="left" style={{width: Dimensions.get('window').width * 0.5}} />
         <Title text={`$${product.price.toFixed(2)}`} textAlign="right" />
 
         <Text style={styles.rating}>
