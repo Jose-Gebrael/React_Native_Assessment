@@ -1,13 +1,15 @@
-// src/components/atoms/ProductCard/ProductCard.styles.ts
-import { StyleSheet } from 'react-native';
+import {StyleSheet} from 'react-native';
+import globalColors from '../../../details/styles/globalColors';
 
 const styles = StyleSheet.create({
   productCard: {
-    backgroundColor: '#f8f8f8',
+    backgroundColor: globalColors.cardBackgroundColor,
     borderRadius: 8,
+    borderWidth: 1,
+    borderColor: globalColors.borderColor,
     padding: 10,
     marginBottom: 16,
-    width: '48%', // Adjust width for two-column layout
+    width: '48%',
   },
   productImage: {
     width: '100%',
@@ -32,7 +34,7 @@ const styles = StyleSheet.create({
   productPrice: {
     fontSize: 16,
     fontWeight: 'bold',
-    color: '#4CAF50',
+    color: globalColors.textLinkColor,
   },
 });
 

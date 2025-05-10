@@ -10,7 +10,8 @@ const colors = {
   buttonTextColor: '#FFFFFF',
   textLinkColor : '#1C83FF',
   listBorderColor: '#000000',
-  seperatorColor: '#000000'
+  seperatorColor: '#000000',
+  cardBackgroundColor: '#f8f8f8',
 };
 
 export default colors;
