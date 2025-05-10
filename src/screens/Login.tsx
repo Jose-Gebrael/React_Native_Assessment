@@ -1,38 +1,107 @@
 import React, {useState} from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, Alert, ActivityIndicator} from 'react-native';
+import {useForm, Controller} from 'react-hook-form';
+import {zodResolver} from '@hookform/resolvers/zod';
 import styles from './Login.styles';
 import {Button} from '../components/atoms/Button';
 import {TextInput} from '../components/atoms/TextInput';
 import {Title} from '../components/atoms/Title';
+import {useAuth} from '../context/AuthContext';
 import {useNavigation} from '@react-navigation/native';
 import {AppStackNavigationProp} from '../navigation/navigation.types';
+import {
+  authenticationSchema,
+  AuthenticationFormData,
+} from '../schemas/AuthenticationSchema';
 
 export default function Login() {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const {login} = useAuth();
   const navigation = useNavigation<AppStackNavigationProp>();
+  const [loading, setLoading] = useState(false);
+
+  const {
+    control,
+    handleSubmit,
+    formState: {errors},
+  } = useForm<AuthenticationFormData>({
+    resolver: zodResolver(authenticationSchema),
+    defaultValues: {
+      username: 'eurisko@gmail.com', // Empty before handing in assignment
+      password: 'academy2025', // Empty before handing in assignment
+    },
+  });
+
+  const handleLogin = async (data: AuthenticationFormData) => {
+    setLoading(true);
+
+    setTimeout(() => {
+      const {username, password} = data;
+
+      if (username === 'eurisko@gmail.com' && password === 'academy2025') {
+        const userId = '99'; //simulating the API gave us this user id
+        login('sampleAccessToken', userId);
+        Alert.alert('Success', 'You are logged in!');
+      } else {
+        Alert.alert('Error', 'Invalid credentials.');
+      }
+
+      setLoading(false);
+    }, 2000);
+  };
 
   return (
     <View style={styles.container}>
       <Title text="Welcome" />
       <Text style={styles.subtitle}>Sign in to your account to continue</Text>
 
-      <TextInput
-        iconName="mail"
-        placeholder="Enter your email (eurisko@gmail.com)"
-        value={username}
-        onChangeText={setUsername}
+      <Controller
+        control={control}
+        name="username"
+        render={({field: {onChange, value}}) => (
+          <View>
+            <TextInput
+              iconName="mail"
+              placeholder="Enter your email (eurisko@gmail.com)"
+              value={value}
+              onChangeText={onChange}
+              autoCapitalize="none"
+            />
+            {errors.username && (
+              <Text style={styles.errorText}>{errors.username.message}</Text>
+            )}
+          </View>
+        )}
       />
 
-      <TextInput
-        iconName="lock"
-        placeholder="Enter your password (academy2025)"
-        value={password}
-        onChangeText={setPassword}
-        isPassword={true}
+      <Controller
+        control={control}
+        name="password"
+        render={({field: {onChange, value}}) => (
+          <View>
+            <TextInput
+              iconName="lock"
+              placeholder="Enter your password (academy2025)"
+              value={value}
+              onChangeText={onChange}
+              isPassword={true}
+              autoCapitalize="none"
+            />
+            {errors.password && (
+              <Text style={styles.errorText}>{errors.password.message}</Text>
+            )}
+          </View>
+        )}
       />
 
-      <Button title="Sign In" onPress={() => {}} />
+      {loading ? (
+        <ActivityIndicator
+          size="large"
+          color="#4CAF50"
+          style={{marginTop: 16}}
+        />
+      ) : (
+        <Button title="Sign In" onPress={handleSubmit(handleLogin)} />
+      )}
 
       <Text style={styles.footerText}>
         Don't have an account?{' '}

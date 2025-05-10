@@ -22,6 +22,7 @@ export default function Login() {
         placeholder="Enter your email"
         value={username}
         onChangeText={setUsername}
+        autoCapitalize="none"
       />
 
       <TextInput
@@ -30,6 +31,7 @@ export default function Login() {
         value={password}
         onChangeText={setPassword}
         isPassword={true}
+        autoCapitalize="none"
       />
 
       <Button title="Create Account" onPress={() => {}} />

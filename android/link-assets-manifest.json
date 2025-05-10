@@ -1,0 +1,13 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "src/assets/fonts/GendyRegular.otf",
+      "sha1": "4831ba4ef37d9394cd1ed3254a8573d0d68d2753"
+    },
+    {
+      "path": "src/assets/fonts/GothamBook.otf",
+      "sha1": "953cc4b8e72d38981181f25cc5f197dcba3d7cf3"
+    }
+  ]
+}

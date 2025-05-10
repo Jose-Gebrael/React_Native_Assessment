@@ -9,12 +9,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   subtitle: {
+    fontFamily: 'GothamBook',
     fontSize: 16,
     textAlign: 'center',
     color: globalColors.textColor,
     marginBottom: 20,
   },
   footerText: {
+    fontFamily: 'GothamBook',
     textAlign: 'center',
     color: globalColors.textColor,
     marginTop: 12,
@@ -22,6 +24,14 @@ const styles = StyleSheet.create({
   linkText: {
     color: globalColors.textLinkColor,
     fontWeight: 'bold',
+  },
+  title: {
+    fontSize: 50,
+  },
+  errorText: {
+    color: 'red',
+    fontSize: 12,
+    marginBottom: 4,
   },
 });
 
