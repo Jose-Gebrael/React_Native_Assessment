@@ -1,5 +1,4 @@
-import { StyleSheet } from 'react-native';
-import globalColors from '../../../details/styles/globalColors';
+import {StyleSheet} from 'react-native';
 
 const styles = StyleSheet.create({
   title: {
@@ -7,7 +6,6 @@ const styles = StyleSheet.create({
     fontSize: 36,
     textAlign: 'center',
     marginBottom: 8,
-    color: globalColors.titleColor,
   },
 });
 

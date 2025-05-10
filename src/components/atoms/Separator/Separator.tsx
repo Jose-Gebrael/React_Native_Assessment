@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, StyleProp, ViewStyle} from 'react-native';
 import styles from './Separator.styles';
-import globalColors from '../../../details/styles/globalColors';
+import {useTheme} from '../../../context/ThemeContext';
 
 interface SeparatorProps {
   color?: string;
@@ -11,17 +11,17 @@ interface SeparatorProps {
 }
 
 export default function Separator({
-  color = globalColors.seperatorColor,
   thickness = 2,
   marginVertical = 8,
   style,
 }: SeparatorProps) {
+  const {colors} = useTheme();
   return (
     <View
       style={[
         styles.separator,
         {
-          backgroundColor: color,
+          backgroundColor: colors.textColor,
           height: thickness,
           marginVertical: marginVertical,
         },

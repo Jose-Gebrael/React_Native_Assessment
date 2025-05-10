@@ -1,15 +1,25 @@
-import React, {useState} from 'react';
+import React, {useState, useLayoutEffect} from 'react';
 import {View, Text, Alert, ActivityIndicator} from 'react-native';
 import {Button} from '../components/atoms/Button';
 import {TextInput} from '../components/atoms/TextInput';
 import {Title} from '../components/atoms/Title';
 import styles from './OTP.styles';
 import {useAuth} from '../context/AuthContext';
+import {useTheme} from '../context/ThemeContext';
+import {useNavigation} from '@react-navigation/native';
 
 export default function OTP() {
   const {login} = useAuth();
   const [otp, setOtp] = useState('');
   const [loading, setLoading] = useState(false);
+  const {colors} = useTheme();
+  const navigation = useNavigation();
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerTintColor: colors.textColor,
+    });
+  }, [navigation, colors]);
 
   const handleVerifyOTP = () => {
     setLoading(true);
@@ -18,7 +28,7 @@ export default function OTP() {
       if (otp === '1234') {
         setLoading(false);
         Alert.alert('Success', `OTP verified successfully!`);
-        const userID = '55'; //This will be replaced by actual userID when we get API
+        const userID = '55'; // This will be replaced by actual userID when we get API
         login('sampleAccessToken', userID);
       } else {
         setLoading(false);
@@ -28,9 +38,9 @@ export default function OTP() {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, {backgroundColor: colors.appBackground}]}>
       <Title text="Verify Account" textAlign="center" />
-      <Text style={styles.subtitle}>
+      <Text style={[styles.subtitle, {color: colors.textColor}]}>
         We've sent you a verification code to your email (1234)
       </Text>
 

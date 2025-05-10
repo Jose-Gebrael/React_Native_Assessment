@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import globalColors from '../../../details/styles/globalColors';
+import React, {useState} from 'react';
+import {useTheme} from '../../../context/ThemeContext';
 import {
   TextInput as RNTextInput,
   TextInputProps,
@@ -13,7 +13,7 @@ interface TextInputPropsExtended extends TextInputProps {
   iconName?: string;
   isPassword?: boolean;
   isSearch?: boolean;
-  isNumeric?: boolean; // ✅ New: Numeric Keyboard without Icon
+  isNumeric?: boolean;
 }
 
 export default function TextInput({
@@ -23,33 +23,43 @@ export default function TextInput({
   isNumeric = false,
   ...props
 }: TextInputPropsExtended) {
+  const {colors} = useTheme();
   const [passwordVisible, setPasswordVisible] = useState(!isPassword);
 
   return (
-    <View style={styles.inputContainer}>
-      {/* Display Icons */}
+    <View
+      style={[
+        styles.inputContainer,
+        {backgroundColor: colors.inputBackground},
+      ]}>
       {isSearch ? (
-        <Feather name="search" size={20} style={styles.icon} />
+        <Feather
+          name="search"
+          size={20}
+          style={[styles.icon, {color: colors.textColor}]}
+        />
       ) : iconName ? (
-        <Feather name={iconName} size={20} style={styles.icon} />
+        <Feather
+          name={iconName}
+          size={20}
+          style={[styles.icon, {color: colors.textColor}]}
+        />
       ) : null}
 
-      {/* Text Input */}
       <RNTextInput
-        style={styles.input}
+        style={[styles.input, {color: colors.textColor}]}
         {...props}
         secureTextEntry={isPassword && !passwordVisible}
-        placeholderTextColor={globalColors.placeholderTextColor}
-        keyboardType={isNumeric ? 'numeric' : 'default'} // ✅ Numeric Keyboard without Icon
+        placeholderTextColor={colors.placeholderTextColor}
+        keyboardType={isNumeric ? 'numeric' : 'default'}
       />
 
-      {/* Password Visibility Toggle */}
       {isPassword && (
         <TouchableOpacity onPress={() => setPasswordVisible(!passwordVisible)}>
           <Feather
             name={passwordVisible ? 'eye' : 'eye-off'}
             size={20}
-            style={styles.icon}
+            style={[styles.icon, {color: colors.textColor}]}
           />
         </TouchableOpacity>
       )}

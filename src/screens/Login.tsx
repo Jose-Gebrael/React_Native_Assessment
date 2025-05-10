@@ -9,9 +9,11 @@ import {Title} from '../components/atoms/Title';
 import {useAuth} from '../context/AuthContext';
 import {useNavigation} from '@react-navigation/native';
 import {AppStackNavigationProp} from '../types/navigation.types';
+import {useTheme} from '../context/ThemeContext';
 import {loginSchema, LoginFormData} from '../schemas/LoginSchema';
 
 export default function Login() {
+  const {colors} = useTheme();
   const {login} = useAuth();
   const navigation = useNavigation<AppStackNavigationProp>();
   const [loading, setLoading] = useState(false);
@@ -46,9 +48,11 @@ export default function Login() {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, {backgroundColor: colors.appBackground}]}>
       <Title text="Welcome" textAlign="center" />
-      <Text style={styles.subtitle}>Sign in to your account to continue</Text>
+      <Text style={[styles.subtitle, {color: colors.textColor}]}>
+        Sign in to your account to continue
+      </Text>
 
       <Controller
         control={control}
@@ -103,11 +107,11 @@ export default function Login() {
         />
       )}
 
-      <Text style={styles.footerText}>
+      <Text style={[styles.footerText, {color: colors.textColor}]}>
         Don't have an account?{' '}
         <Text
           onPress={() => navigation.navigate('CreateAccount')}
-          style={styles.linkText}>
+          style={[styles.linkText, {color: colors.textLinkColor}]}>
           Sign Up
         </Text>
       </Text>

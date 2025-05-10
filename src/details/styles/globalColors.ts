@@ -6,11 +6,11 @@ const colors = {
   redButton: '#FF6347',
   inputBackground: '#FFFFFF',
   borderColor: '#666666',
-  placeholderTextColor:'#999999',
+  placeholderTextColor: '#999999',
   buttonTextColor: '#FFFFFF',
-  textLinkColor : '#1C83FF',
+  textLinkColor: '#1C83FF',
   listBorderColor: '#000000',
-  seperatorColor: '#000000',
+  separatorColor: '#000000',
   cardBackgroundColor: '#f8f8f8',
 };
 

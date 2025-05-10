@@ -8,12 +8,14 @@ import {TextInput} from '../components/atoms/TextInput';
 import {Title} from '../components/atoms/Title';
 import {useNavigation} from '@react-navigation/native';
 import {AppStackNavigationProp} from '../types/navigation.types';
+import {useTheme} from '../context/ThemeContext';
 import {
   createAccountSchema,
   CreateAccountSchemaFormData,
 } from '../schemas/CreateAccountSchema';
 
 export default function CreateAccount() {
+  const {colors} = useTheme();
   const navigation = useNavigation<AppStackNavigationProp>();
   const [loading, setLoading] = useState(false);
 
@@ -41,11 +43,12 @@ export default function CreateAccount() {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, {backgroundColor: colors.appBackground}]}>
       <Title text="Create your Account" textAlign="center" />
-      <Text style={styles.subtitle}>Please enter your information below</Text>
+      <Text style={[styles.subtitle, {color: colors.textColor}]}>
+        Please enter your information below
+      </Text>
 
-      {/* Name Input */}
       <Controller
         control={control}
         name="name"
@@ -65,7 +68,6 @@ export default function CreateAccount() {
         )}
       />
 
-      {/* Phone Number Input */}
       <Controller
         control={control}
         name="phoneNumber"
@@ -138,9 +140,11 @@ export default function CreateAccount() {
         />
       )}
 
-      <Text style={styles.footerText}>
+      <Text style={[styles.footerText, {color: colors.textColor}]}>
         Already have an account?{' '}
-        <Text onPress={() => navigation.goBack()} style={styles.linkText}>
+        <Text
+          onPress={() => navigation.goBack()}
+          style={[styles.linkText, {color: colors.textLinkColor}]}>
           Sign in
         </Text>
       </Text>

@@ -1,5 +1,4 @@
 import {StyleSheet} from 'react-native';
-import globalColors from '../../../details/styles/globalColors';
 
 const styles = StyleSheet.create({
   container: {
@@ -9,12 +8,10 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
   },
   icon: {
-    color: globalColors.textColor,
     marginRight: 8,
   },
   label: {
     fontSize: 16,
-    color: globalColors.textColor,
   },
 });
 

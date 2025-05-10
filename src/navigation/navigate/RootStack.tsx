@@ -6,7 +6,7 @@ import {useAuth} from '../../context/AuthContext';
 const Stack = createNativeStackNavigator();
 
 export default function RootStack() {
-  const {isLoggedIn} = useAuth(); // Get login state from context
+  const {isLoggedIn} = useAuth();
 
   return (
     <Stack.Navigator screenOptions={{headerShown: false}}>

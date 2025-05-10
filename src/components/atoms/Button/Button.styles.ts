@@ -1,5 +1,4 @@
-// src/components/atoms/Button/Button.styles.ts
-import { StyleSheet } from 'react-native';
+import {StyleSheet} from 'react-native';
 import globalColors from '../../../details/styles/globalColors';
 
 const styles = StyleSheet.create({
@@ -14,16 +13,16 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   confirmButton: {
-    backgroundColor: globalColors.blueButton || '#4CAF50', // Default to green
+    backgroundColor: globalColors.blueButton,
   },
   confirmButtonText: {
-    color: globalColors.buttonTextColor || '#FFFFFF',
+    color: globalColors.buttonTextColor,
   },
   logoutButton: {
-    backgroundColor: globalColors.redButton || '#E53935', // Default to red
+    backgroundColor: globalColors.redButton,
   },
   logoutButtonText: {
-    color: globalColors.buttonTextColor || '#FFFFFF',
+    color: globalColors.buttonTextColor,
   },
 });
 

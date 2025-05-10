@@ -1,11 +1,9 @@
 import {StyleSheet, Dimensions, PixelRatio} from 'react-native';
 import globalStyles from '../details/styles/globalStyles';
-import globalColors from '../details/styles/globalColors';
 
 const styles = StyleSheet.create({
   container: {
     ...globalStyles.container,
-    backgroundColor: '#ffffff',
   },
   header: {
     flexDirection: 'row',
@@ -19,11 +17,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   icon: {
-    marginLeft: 12, // Space between icons
+    marginLeft: 12,
   },
   productImage: {
     width: '100%',
-    height: Dimensions.get('window').height * 0.4, // Better aspect ratio
+    height: Dimensions.get('window').height * 0.4,
     resizeMode: 'cover',
     borderRadius: 8,
     marginBottom: 16,
@@ -36,7 +34,6 @@ const styles = StyleSheet.create({
     fontFamily: 'GothamBook',
     fontSize: PixelRatio.get() * 8,
     textAlign: 'left',
-    color: globalColors.textColor,
     marginBottom: 5,
     fontWeight: 'bold',
   },
@@ -44,14 +41,13 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#FFD700',
     marginBottom: 12,
-    textAlign: 'left', // Aligned left for better UI
+    textAlign: 'left',
   },
   description: {
     fontSize: 14,
-    color: globalColors.textColor,
     lineHeight: 20,
     marginBottom: 16,
-    textAlign: 'justify', // Improved text alignment
+    textAlign: 'justify',
   },
   addToCartButton: {
     backgroundColor: '#4CAF50',

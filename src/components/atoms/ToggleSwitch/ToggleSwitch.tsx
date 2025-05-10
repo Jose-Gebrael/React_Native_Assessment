@@ -1,5 +1,5 @@
-// src/components/atoms/ToggleSwitch/ToggleSwitch.tsx
 import React from 'react';
+import {useTheme} from '../../../context/ThemeContext';
 import {
   View,
   Text,
@@ -26,10 +26,17 @@ export default function ToggleSwitch({
   containerStyle,
   labelStyle,
 }: ToggleSwitchProps) {
+  const {colors} = useTheme();
   return (
     <View style={[styles.container, containerStyle]}>
-      <Feather name="moon" size={24} style={styles.icon} />
-      <Text style={[styles.label, labelStyle]}>{label}</Text>
+      <Feather
+        name="moon"
+        size={24}
+        style={[styles.icon, {color: colors.textColor}]}
+      />
+      <Text style={[styles.label, labelStyle, {color: colors.textColor}]}>
+        {label}
+      </Text>
       <Switch
         value={value}
         onValueChange={onToggle}
