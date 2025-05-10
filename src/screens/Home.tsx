@@ -5,17 +5,23 @@ import {TextInput} from '../components/atoms/TextInput';
 import {Title} from '../components/atoms/Title';
 import productsData from '../assets/data/Products.json';
 import {Product} from '../types/product.types';
+import {useNavigation} from '@react-navigation/native';
+import {AppStackNavigationProp} from '../types/navigation.types';
 
 export default function Home() {
-  const products: Product[] = productsData.data; // Using the Product type
+  const navigation = useNavigation<AppStackNavigationProp>();
+  const products: Product[] = productsData.data;
 
   const generateRandomRating = (): number => {
-    return parseFloat((Math.random() * (5 - 3) + 3).toFixed(1)); // Random number between 3 and 5 (1 decimal)
+    return parseFloat((Math.random() * (5 - 3) + 3).toFixed(1));
   };
 
-  // Render each product
   const renderProduct = ({item}: {item: Product}) => (
-    <TouchableOpacity style={styles.productCard}>
+    <TouchableOpacity
+      style={styles.productCard}
+      onPress={() =>
+        navigation.navigate('ProductDetails', {productId: item._id})
+      }>
       <Image source={{uri: item.images[0].url}} style={styles.productImage} />
       <Text style={styles.productTitle} numberOfLines={1}>
         {item.title}

@@ -1,26 +1,18 @@
 import {StyleSheet} from 'react-native';
 import globalStyles from '../details/styles/globalStyles';
+import globalColors from '../details/styles/globalColors';
 
 const styles = StyleSheet.create({
   container: {
     ...globalStyles.container,
+    paddingHorizontal: 30,
+    justifyContent: 'flex-start',
   },
-  title: {
-    ...globalStyles.text,
-    fontSize: 24,
-  },
-  input: {
-    height: 40,
-    borderColor: '#ccc',
-    borderWidth: 1,
-    marginBottom: 12,
-    paddingHorizontal: 8,
-    borderRadius: 4,
-    backgroundColor: '#fff',
-  },
-  text: {
-    fontSize: 50,
-    fontWeight: 'bold',
+  subtitle: {
+    fontFamily: 'GothamBook',
+    fontSize: 16,
+    textAlign: 'left',
+    color: globalColors.textColor,
   },
 });
 

@@ -3,12 +3,14 @@ const colors = {
   textColor: '#000000',
   appBackground: '#FFFFFF',
   blueButton: '#1C83FF',
+  redButton: '#FF6347',
   inputBackground: '#FFFFFF',
   borderColor: '#666666',
   placeholderTextColor:'#999999',
   buttonTextColor: '#FFFFFF',
   textLinkColor : '#1C83FF',
   listBorderColor: '#000000',
+  seperatorColor: '#000000'
 };
 
 export default colors;

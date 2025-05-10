@@ -99,7 +99,11 @@ export default function Login() {
           style={{marginTop: 16}}
         />
       ) : (
-        <Button title="Sign In" onPress={handleSubmit(handleLogin)} />
+        <Button
+          title="Sign In"
+          onPress={handleSubmit(handleLogin)}
+          variant="confirm"
+        />
       )}
 
       <Text style={styles.footerText}>
