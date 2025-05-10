@@ -25,9 +25,6 @@ const styles = StyleSheet.create({
     color: globalColors.textLinkColor,
     fontWeight: 'bold',
   },
-  title: {
-    fontSize: 50,
-  },
   errorText: {
     color: 'red',
     fontSize: 12,

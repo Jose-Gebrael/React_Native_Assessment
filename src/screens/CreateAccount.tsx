@@ -5,7 +5,7 @@ import {Button} from '../components/atoms/Button';
 import {TextInput} from '../components/atoms/TextInput';
 import {Title} from '../components/atoms/Title';
 import {useNavigation} from '@react-navigation/native';
-import {AppStackNavigationProp} from '../navigation/navigation.types';
+import {AppStackNavigationProp} from '../types/navigation.types';
 
 export default function Login() {
   const [username, setUsername] = useState('');

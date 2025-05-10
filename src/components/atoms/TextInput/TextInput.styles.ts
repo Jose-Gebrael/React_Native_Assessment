@@ -1,4 +1,5 @@
-import {StyleSheet} from 'react-native';
+// src/components/atoms/TextInput/TextInput.styles.ts
+import { StyleSheet } from 'react-native';
 import globalColors from '../../../details/styles/globalColors';
 
 const styles = StyleSheet.create({
@@ -9,7 +10,7 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     paddingHorizontal: 10,
     paddingVertical: 12,
-    marginBottom: 10,
+    marginBottom: 12,
     borderWidth: 1,
     borderColor: globalColors.borderColor,
   },
@@ -20,6 +21,7 @@ const styles = StyleSheet.create({
   input: {
     flex: 1,
     color: globalColors.textColor,
+    fontSize: 16,
   },
 });
 

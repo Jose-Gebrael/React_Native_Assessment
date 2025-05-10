@@ -13,6 +13,7 @@ export type ProtectedStackParamList = {
   Home: undefined;
   ProductDetails: undefined;
   Settings: undefined;
+  BottomTabs: undefined;
 };
 
 // Unified type for the entire app (both stacks)

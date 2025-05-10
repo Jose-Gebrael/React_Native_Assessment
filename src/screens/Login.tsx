@@ -8,7 +8,7 @@ import {TextInput} from '../components/atoms/TextInput';
 import {Title} from '../components/atoms/Title';
 import {useAuth} from '../context/AuthContext';
 import {useNavigation} from '@react-navigation/native';
-import {AppStackNavigationProp} from '../navigation/navigation.types';
+import {AppStackNavigationProp} from '../types/navigation.types';
 import {
   authenticationSchema,
   AuthenticationFormData,
@@ -40,7 +40,6 @@ export default function Login() {
       if (username === 'eurisko@gmail.com' && password === 'academy2025') {
         const userId = '99'; //simulating the API gave us this user id
         login('sampleAccessToken', userId);
-        Alert.alert('Success', 'You are logged in!');
       } else {
         Alert.alert('Error', 'Invalid credentials.');
       }
@@ -51,7 +50,7 @@ export default function Login() {
 
   return (
     <View style={styles.container}>
-      <Title text="Welcome" />
+      <Title text="Welcome" textAlign="center" />
       <Text style={styles.subtitle}>Sign in to your account to continue</Text>
 
       <Controller

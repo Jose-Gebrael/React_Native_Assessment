@@ -8,6 +8,7 @@ const colors = {
   placeholderTextColor:'#999999',
   buttonTextColor: '#FFFFFF',
   textLinkColor : '#1C83FF',
+  listBorderColor: '#000000',
 };
 
 export default colors;
