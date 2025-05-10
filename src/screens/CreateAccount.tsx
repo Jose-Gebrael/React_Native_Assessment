@@ -24,10 +24,10 @@ export default function CreateAccount() {
   } = useForm<CreateAccountSchemaFormData>({
     resolver: zodResolver(createAccountSchema),
     defaultValues: {
-      username: 'jaafar@gmail.com',
-      password: 'jaafar123',
-      name: 'Jaafar',
-      phoneNumber: '12345678',
+      username: '',
+      password: '',
+      name: '',
+      phoneNumber: '',
     },
   });
 

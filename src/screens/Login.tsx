@@ -9,10 +9,7 @@ import {Title} from '../components/atoms/Title';
 import {useAuth} from '../context/AuthContext';
 import {useNavigation} from '@react-navigation/native';
 import {AppStackNavigationProp} from '../types/navigation.types';
-import {
-  loginSchema,
-  LoginFormData,
-} from '../schemas/LoginSchema';
+import {loginSchema, LoginFormData} from '../schemas/LoginSchema';
 
 export default function Login() {
   const {login} = useAuth();
@@ -26,8 +23,8 @@ export default function Login() {
   } = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
-      username: 'eurisko@gmail.com', // Empty before handing in assignment
-      password: 'academy2025', // Empty before handing in assignment
+      username: '',
+      password: '',
     },
   });
 
