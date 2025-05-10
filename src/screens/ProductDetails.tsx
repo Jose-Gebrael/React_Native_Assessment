@@ -1,5 +1,12 @@
 import React from 'react';
-import {View, Text, Image, ScrollView, TouchableOpacity, Dimensions} from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  ScrollView,
+  TouchableOpacity,
+  Dimensions,
+} from 'react-native';
 import {useRoute, RouteProp, useNavigation} from '@react-navigation/native';
 import productsData from '../assets/data/Products.json';
 import {Product} from '../types/product.types';
@@ -41,18 +48,28 @@ export default function ProductDetails() {
   return (
     <View style={styles.container}>
       <ScrollView style={styles.detailsContainer}>
+        {/* Header with Back, Heart, and Cart Icons */}
         <View style={styles.header}>
           <TouchableOpacity onPress={() => navigation.goBack()}>
             <Feather name="arrow-left" size={24} color="#fff" />
           </TouchableOpacity>
-          <Feather name="heart" size={24} color="#000000" />
+          <View style={styles.iconContainer}>
+            <TouchableOpacity onPress={() => {}}>
+              <Feather name="heart" size={24} color="#000" style={styles.icon} />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => {}}>
+              <Feather name="send" size={24} color="#000" style={styles.icon} />
+            </TouchableOpacity>
+          </View>
         </View>
 
+        {/* Product Image */}
         <Image
           source={{uri: product.images[0].url}}
           style={styles.productImage}
         />
 
+        {/* Product Details */}
         <Title text={product.title} textAlign="left" style={{width: Dimensions.get('window').width * 0.5}} />
         <Title text={`$${product.price.toFixed(2)}`} textAlign="right" />
 

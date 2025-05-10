@@ -5,19 +5,31 @@ import globalColors from '../details/styles/globalColors';
 const styles = StyleSheet.create({
   container: {
     ...globalStyles.container,
+    backgroundColor: '#ffffff',
   },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    padding: 16,
+    alignItems: 'center',
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+  },
+  iconContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  icon: {
+    marginLeft: 12, // Space between icons
   },
   productImage: {
     width: '100%',
-    height: Dimensions.get('window').height * 0.5,
-    marginBottom: 15,
+    height: Dimensions.get('window').height * 0.4, // Better aspect ratio
+    resizeMode: 'cover',
+    borderRadius: 8,
+    marginBottom: 16,
   },
   detailsContainer: {
-    padding: 16,
+    paddingHorizontal: 16,
     flex: 1,
   },
   subtitle: {
@@ -32,17 +44,21 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#FFD700',
     marginBottom: 12,
-    textAlign: 'right',
+    textAlign: 'left', // Aligned left for better UI
   },
   description: {
     fontSize: 14,
     color: globalColors.textColor,
+    lineHeight: 20,
     marginBottom: 16,
+    textAlign: 'justify', // Improved text alignment
   },
   addToCartButton: {
     backgroundColor: '#4CAF50',
     paddingVertical: 12,
+    borderRadius: 8,
     alignItems: 'center',
+    marginTop: 20,
   },
   addToCartText: {
     color: '#fff',
@@ -50,10 +66,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   errorText: {
-    color: '#fff',
+    color: '#ff4d4d',
     fontSize: 18,
     textAlign: 'center',
     marginTop: 20,
+    fontWeight: 'bold',
   },
 });
 

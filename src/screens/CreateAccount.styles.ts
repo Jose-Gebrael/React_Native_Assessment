@@ -1,26 +1,34 @@
-import {StyleSheet} from 'react-native';
+import {StyleSheet, PixelRatio} from 'react-native';
 import globalStyles from '../details/styles/globalStyles';
+import globalColors from '../details/styles/globalColors';
 
 const styles = StyleSheet.create({
   container: {
     ...globalStyles.container,
+    paddingHorizontal: 30,
+    justifyContent: 'center',
   },
-  title: {
-    ...globalStyles.text,
-    fontSize: 24,
+  subtitle: {
+    fontFamily: 'GothamBook',
+    fontSize: PixelRatio.get() * 5,
+    textAlign: 'center',
+    color: globalColors.textColor,
+    marginBottom: 20,
   },
-  input: {
-    height: 40,
-    borderColor: '#ccc',
-    borderWidth: 1,
-    marginBottom: 12,
-    paddingHorizontal: 8,
-    borderRadius: 4,
-    backgroundColor: '#fff',
+  footerText: {
+    fontFamily: 'GothamBook',
+    textAlign: 'center',
+    color: globalColors.textColor,
+    marginTop: 12,
   },
-  text: {
-    fontSize: 50,
+  linkText: {
+    color: globalColors.textLinkColor,
     fontWeight: 'bold',
+  },
+  errorText: {
+    color: 'red',
+    fontSize: 12,
+    marginBottom: 4,
   },
 });
 

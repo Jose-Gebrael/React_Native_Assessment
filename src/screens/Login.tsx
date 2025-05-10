@@ -10,9 +10,9 @@ import {useAuth} from '../context/AuthContext';
 import {useNavigation} from '@react-navigation/native';
 import {AppStackNavigationProp} from '../types/navigation.types';
 import {
-  authenticationSchema,
-  AuthenticationFormData,
-} from '../schemas/AuthenticationSchema';
+  loginSchema,
+  LoginFormData,
+} from '../schemas/LoginSchema';
 
 export default function Login() {
   const {login} = useAuth();
@@ -23,15 +23,15 @@ export default function Login() {
     control,
     handleSubmit,
     formState: {errors},
-  } = useForm<AuthenticationFormData>({
-    resolver: zodResolver(authenticationSchema),
+  } = useForm<LoginFormData>({
+    resolver: zodResolver(loginSchema),
     defaultValues: {
       username: 'eurisko@gmail.com', // Empty before handing in assignment
       password: 'academy2025', // Empty before handing in assignment
     },
   });
 
-  const handleLogin = async (data: AuthenticationFormData) => {
+  const handleLogin = async (data: LoginFormData) => {
     setLoading(true);
 
     setTimeout(() => {
