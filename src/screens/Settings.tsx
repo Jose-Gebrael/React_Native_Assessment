@@ -5,12 +5,12 @@ import {Title} from '../components/atoms/Title';
 import {Button} from '../components/atoms/Button';
 import {ToggleSwitch} from '../components/atoms/ToggleSwitch';
 import {Separator} from '../components/atoms/Separator';
-import {useAuth} from '../context/AuthContext';
-import {useTheme} from '../context/ThemeContext';
+import {useAuthStore} from '../store/authStore';
+import {useThemeStore} from '../store/themeStore';
 
 export default function Settings() {
-  const {colors, isDarkMode, toggleTheme} = useTheme();
-  const {logout} = useAuth();
+const {colors, isDarkMode, toggleTheme} = useThemeStore();
+  const {logout} = useAuthStore();
 
   return (
     <View style={[styles.container, {backgroundColor: colors.appBackground}]}>

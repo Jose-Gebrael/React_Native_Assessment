@@ -6,18 +6,17 @@ import styles from './Login.styles';
 import {Button} from '../components/atoms/Button';
 import {TextInput} from '../components/atoms/TextInput';
 import {Title} from '../components/atoms/Title';
-import {useAuth} from '../context/AuthContext';
+import {useAuthStore} from '../store/authStore';
 import {useNavigation} from '@react-navigation/native';
 import {AppStackNavigationProp} from '../types/navigation.types';
-import {useTheme} from '../context/ThemeContext';
+import {useThemeStore} from '../store/themeStore';
 import {loginSchema, LoginFormData} from '../schemas/LoginSchema';
 
 export default function Login() {
-  const {colors} = useTheme();
-  const {login} = useAuth();
+  const {colors} = useThemeStore();
+  const {login} = useAuthStore();
   const navigation = useNavigation<AppStackNavigationProp>();
   const [loading, setLoading] = useState(false);
-
   const {
     control,
     handleSubmit,
@@ -25,10 +24,14 @@ export default function Login() {
   } = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
-      username: '',
-      password: '',
+      username: 'eurisko@gmail.com', //Empty this before Handing in assignment
+      password: 'academy2025', //Empty this before Handing in assignment
     },
   });
+
+  //handle a splashscreen to load the authstore and themestore.
+  //const hydrated = useThemeStore(state => state.hydrated);
+  //if (!hydrated) return <SplashScreen />;
 
   const handleLogin = async (data: LoginFormData) => {
     setLoading(true);

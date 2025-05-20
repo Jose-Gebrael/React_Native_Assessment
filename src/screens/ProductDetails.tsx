@@ -15,7 +15,7 @@ import Feather from 'react-native-vector-icons/Feather';
 import styles from './ProductDetails.styles';
 import {Title} from '../components/atoms/Title';
 import {Button} from '../components/atoms/Button';
-import {useTheme} from '../context/ThemeContext';
+import {useThemeStore} from '../store/themeStore';
 
 type ProductDetailsRouteProp = RouteProp<
   {params: {productId: string}},
@@ -23,7 +23,7 @@ type ProductDetailsRouteProp = RouteProp<
 >;
 
 export default function ProductDetails() {
-  const {colors} = useTheme();
+  const {colors} = useThemeStore();
   const route = useRoute<ProductDetailsRouteProp>();
   const navigation = useNavigation<AppStackNavigationProp>();
   const {productId} = route.params;

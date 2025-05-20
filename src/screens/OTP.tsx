@@ -4,15 +4,15 @@ import {Button} from '../components/atoms/Button';
 import {TextInput} from '../components/atoms/TextInput';
 import {Title} from '../components/atoms/Title';
 import styles from './OTP.styles';
-import {useAuth} from '../context/AuthContext';
-import {useTheme} from '../context/ThemeContext';
+import {useAuthStore} from '../store/authStore';
+import {useThemeStore} from '../store/themeStore';
 import {useNavigation} from '@react-navigation/native';
 
 export default function OTP() {
-  const {login} = useAuth();
+  const {login} = useAuthStore();
   const [otp, setOtp] = useState('');
   const [loading, setLoading] = useState(false);
-  const {colors} = useTheme();
+  const {colors} = useThemeStore();
   const navigation = useNavigation();
 
   useLayoutEffect(() => {
@@ -27,7 +27,7 @@ export default function OTP() {
     setTimeout(() => {
       if (otp === '1234') {
         setLoading(false);
-        Alert.alert('Success', `OTP verified successfully!`);
+        Alert.alert('Success', 'OTP verified successfully!');
         const userID = '55'; // This will be replaced by actual userID when we get API
         login('sampleAccessToken', userID);
       } else {

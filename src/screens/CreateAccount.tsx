@@ -8,14 +8,14 @@ import {TextInput} from '../components/atoms/TextInput';
 import {Title} from '../components/atoms/Title';
 import {useNavigation} from '@react-navigation/native';
 import {AppStackNavigationProp} from '../types/navigation.types';
-import {useTheme} from '../context/ThemeContext';
+import {useThemeStore} from '../store/themeStore';
 import {
   createAccountSchema,
   CreateAccountSchemaFormData,
 } from '../schemas/CreateAccountSchema';
 
 export default function CreateAccount() {
-  const {colors} = useTheme();
+  const {colors} = useThemeStore();
   const navigation = useNavigation<AppStackNavigationProp>();
   const [loading, setLoading] = useState(false);
 
@@ -33,7 +33,7 @@ export default function CreateAccount() {
     },
   });
 
-  const handleCreateAccount = async (data: CreateAccountSchemaFormData) => {
+  const handleCreateAccount = async (_data: CreateAccountSchemaFormData) => {
     setLoading(true);
 
     setTimeout(() => {
@@ -130,7 +130,7 @@ export default function CreateAccount() {
         <ActivityIndicator
           size="large"
           color="#4CAF50"
-          style={{marginTop: 16}}
+          style={styles.loader}
         />
       ) : (
         <Button

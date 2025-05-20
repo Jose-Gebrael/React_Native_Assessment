@@ -4,7 +4,7 @@ import styles from './ProductCard.styles';
 import {Product} from '../../../types/product.types';
 import {useNavigation} from '@react-navigation/native';
 import {AppStackNavigationProp} from '../../../types/navigation.types';
-import {useTheme} from '../../../context/ThemeContext';
+import {useThemeStore} from '../../../store/themeStore';
 
 interface ProductCardProps {
   product: Product;
@@ -12,7 +12,7 @@ interface ProductCardProps {
 
 export default function ProductCard({product}: ProductCardProps) {
   const navigation = useNavigation<AppStackNavigationProp>();
-  const {colors} = useTheme();
+  const {colors} = useThemeStore();
 
   const generateRandomRating = (): number => {
     return parseFloat((Math.random() * (5 - 3) + 3).toFixed(1));

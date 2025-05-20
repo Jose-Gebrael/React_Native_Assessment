@@ -1,12 +1,13 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {AuthenticationStack, ProtectedStack} from '../stacks';
-import {useAuth} from '../../context/AuthContext';
+import {useAuthStore} from '../../store/authStore';
+
 
 const Stack = createNativeStackNavigator();
 
 export default function RootStack() {
-  const {isLoggedIn} = useAuth();
+  const {isLoggedIn} = useAuthStore();
 
   return (
     <Stack.Navigator screenOptions={{headerShown: false}}>

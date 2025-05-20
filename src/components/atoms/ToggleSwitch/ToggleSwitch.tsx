@@ -1,5 +1,5 @@
 import React from 'react';
-import {useTheme} from '../../../context/ThemeContext';
+import {useThemeStore} from '../../../store/themeStore';
 import {
   View,
   Text,
@@ -26,7 +26,7 @@ export default function ToggleSwitch({
   containerStyle,
   labelStyle,
 }: ToggleSwitchProps) {
-  const {colors} = useTheme();
+  const {colors} = useThemeStore();
   return (
     <View style={[styles.container, containerStyle]}>
       <Feather

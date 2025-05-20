@@ -26,6 +26,9 @@ const styles = StyleSheet.create({
     fontSize: 12,
     marginBottom: 4,
   },
+  loader: {
+    marginTop: 16,
+  },
 });
 
 export default styles;

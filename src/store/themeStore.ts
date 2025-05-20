@@ -1,4 +1,6 @@
-import React, {createContext, useContext, useState, ReactNode} from 'react';
+import {create} from 'zustand';
+import {persist, createJSONStorage} from 'zustand/middleware';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 interface Theme {
   titleColor: string;
@@ -16,13 +18,12 @@ interface Theme {
   cardBackgroundColor: string;
 }
 
-interface ThemeContextType {
+interface ThemeState {
   isDarkMode: boolean;
   toggleTheme: () => void;
   colors: Theme;
+  hydrated: boolean;
 }
-
-const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 const lightTheme: Theme = {
   titleColor: '#000000',
@@ -40,7 +41,7 @@ const lightTheme: Theme = {
   cardBackgroundColor: '#f8f8f8',
 };
 
-const darkTheme = {
+const darkTheme: Theme = {
   titleColor: '#FFFFFF',
   textColor: '#E0E0E0',
   appBackground: '#121212',
@@ -56,24 +57,33 @@ const darkTheme = {
   cardBackgroundColor: '#1A1A1A',
 };
 
-export const ThemeProvider: React.FC<{children: ReactNode}> = ({children}) => {
-  const [isDarkMode, setIsDarkMode] = useState(false);
-
-  const toggleTheme = () => setIsDarkMode(!isDarkMode);
-
-  const colors = isDarkMode ? darkTheme : lightTheme;
-
-  return (
-    <ThemeContext.Provider value={{isDarkMode, toggleTheme, colors}}>
-      {children}
-    </ThemeContext.Provider>
-  );
-};
-
-export const useTheme = () => {
-  const context = useContext(ThemeContext);
-  if (!context) {
-    throw new Error('useTheme must be used within a ThemeProvider');
-  }
-  return context;
-};
+export const useThemeStore = create<ThemeState>()(
+  persist(
+    (set, get) => ({
+      isDarkMode: false,
+      colors: lightTheme,
+      toggleTheme: () => {
+        const isDark = !get().isDarkMode;
+        set({
+          isDarkMode: isDark,
+          colors: isDark ? darkTheme : lightTheme,
+        });
+      },
+      hydrated: false,
+    }),
+    {
+      name: 'theme-storage',
+      storage: createJSONStorage(() => AsyncStorage),
+      partialize: state => ({isDarkMode: state.isDarkMode}),
+      onRehydrateStorage: () => {
+        return state => {
+          const isDark = state?.isDarkMode ?? false;
+          useThemeStore.setState({
+            colors: isDark ? darkTheme : lightTheme,
+            hydrated: true,
+          });
+        };
+      },
+    },
+  ),
+);

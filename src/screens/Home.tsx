@@ -6,11 +6,11 @@ import {Title} from '../components/atoms/Title';
 import productsData from '../assets/data/Products.json';
 import {Product} from '../types/product.types';
 import ProductCard from '../components/molecules/ProductCard/ProductCard';
-import {useTheme} from '../context/ThemeContext';
+import {useThemeStore} from '../store/themeStore';
 
 export default function Home() {
   const products: Product[] = productsData.data;
-  const {colors} = useTheme();
+  const {colors} = useThemeStore();
 
   const renderProduct = ({item}: {item: Product}) => (
     <ProductCard product={item} />

@@ -3,12 +3,12 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Home from '../../screens/Home';
 import Settings from '../../screens/Settings';
 import Feather from 'react-native-vector-icons/Feather';
-import {useTheme} from '../../context/ThemeContext';
+import {useThemeStore} from '../../store/themeStore';
 
 const Tab = createBottomTabNavigator();
 
 export default function BottomTabs() {
-  const {colors} = useTheme();
+  const {colors} = useThemeStore();
   return (
     <Tab.Navigator
       screenOptions={({route}) => ({

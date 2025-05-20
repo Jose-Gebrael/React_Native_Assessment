@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {useTheme} from '../../../context/ThemeContext';
+import {useThemeStore} from '../../../store/themeStore';
 import {
   TextInput as RNTextInput,
   TextInputProps,
@@ -23,7 +23,7 @@ export default function TextInput({
   isNumeric = false,
   ...props
 }: TextInputPropsExtended) {
-  const {colors} = useTheme();
+  const {colors} = useThemeStore();
   const [passwordVisible, setPasswordVisible] = useState(!isPassword);
 
   return (

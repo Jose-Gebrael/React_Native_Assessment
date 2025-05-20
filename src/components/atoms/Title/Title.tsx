@@ -1,7 +1,7 @@
 import React from 'react';
 import {Text, TextStyle, StyleProp} from 'react-native';
 import styles from './Title.styles';
-import {useTheme} from '../../../context/ThemeContext';
+import {useThemeStore} from '../../../store/themeStore';
 
 interface TitleProps {
   text: string;
@@ -10,7 +10,7 @@ interface TitleProps {
 }
 
 export default function Title({text, textAlign = 'center', style}: TitleProps) {
-  const {colors} = useTheme();
+  const {colors} = useThemeStore();
   return (
     <Text style={[styles.title, {textAlign}, style, {color: colors.textColor}]}>
       {text}
