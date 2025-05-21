@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, Text, Alert, ActivityIndicator} from 'react-native';
+import {View, Text, ActivityIndicator} from 'react-native';
 import {useForm, Controller} from 'react-hook-form';
 import {zodResolver} from '@hookform/resolvers/zod';
 import styles from './Login.styles';
@@ -11,10 +11,16 @@ import {useNavigation} from '@react-navigation/native';
 import {AppStackNavigationProp} from '../types/navigation.types';
 import {useThemeStore} from '../store/themeStore';
 import {loginSchema, LoginFormData} from '../schemas/LoginSchema';
+import {useLoginMutation} from '../queries';
+import {useForgotPasswordMutation} from '../queries';
+import Toast from 'react-native-toast-message';
+import {AxiosError} from 'axios';
 
 export default function Login() {
   const {colors} = useThemeStore();
   const {login} = useAuthStore();
+  const {mutate: sendLogin} = useLoginMutation();
+  const {mutate: forgotPassword} = useForgotPasswordMutation();
   const navigation = useNavigation<AppStackNavigationProp>();
   const [loading, setLoading] = useState(false);
   const {
@@ -24,7 +30,7 @@ export default function Login() {
   } = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
-      username: 'eurisko@gmail.com', //Empty this before Handing in assignment
+      email: 'eurisko@gmail.com', //Empty this before Handing in assignment
       password: 'academy2025', //Empty this before Handing in assignment
     },
   });
@@ -36,18 +42,59 @@ export default function Login() {
   const handleLogin = async (data: LoginFormData) => {
     setLoading(true);
 
-    setTimeout(() => {
-      const {username, password} = data;
+    sendLogin(
+      {
+        email: data.email,
+        password: data.password,
+        token_expires_in: '60m',
+      },
+      {
+        onSuccess: async res => {
+          await login(res.accessToken, res.refreshToken);
+          Toast.show({
+            type: 'success',
+            text1: 'Logged in! Happy Shopping 😊',
+          });
+          setLoading(false);
+          // Navigate to your home/profile/dashboard screen here
+        },
+        onError: err => {
+          const error = err as AxiosError<any>;
+          Toast.show({
+            type: 'error',
+            text1: 'Login failed',
+            text2:
+              error.response?.data?.error?.message || 'Invalid credentials',
+          });
+          setLoading(false);
+        },
+      },
+    );
+  };
 
-      if (username === 'eurisko@gmail.com' && password === 'academy2025') {
-        const userId = '99'; //simulating the API gave us this user id
-        login('sampleAccessToken', userId);
-      } else {
-        Alert.alert('Error', 'Invalid credentials.');
-      }
-
-      setLoading(false);
-    }, 2000);
+  const handleForgotPassword = (email: string) => {
+    forgotPassword(
+      {email},
+      {
+        onSuccess: res => {
+          Toast.show({
+            type: 'success',
+            text1: 'Email Sent',
+            text2: res?.data?.message || 'Please check your inbox.',
+          });
+        },
+        onError: err => {
+          const error = err as AxiosError<any>;
+          Toast.show({
+            type: 'error',
+            text1: 'Failed to Send',
+            text2:
+              error.response?.data?.error?.message ||
+              'Could not send reset instructions.',
+          });
+        },
+      },
+    );
   };
 
   return (
@@ -59,7 +106,7 @@ export default function Login() {
 
       <Controller
         control={control}
-        name="username"
+        name="email"
         render={({field: {onChange, value}}) => (
           <View>
             <TextInput
@@ -69,8 +116,8 @@ export default function Login() {
               onChangeText={onChange}
               autoCapitalize="none"
             />
-            {errors.username && (
-              <Text style={styles.errorText}>{errors.username.message}</Text>
+            {errors.email && (
+              <Text style={styles.errorText}>{errors.email.message}</Text>
             )}
           </View>
         )}
@@ -96,12 +143,17 @@ export default function Login() {
         )}
       />
 
+      <Text style={[styles.forgotPasswordText, {color: colors.textColor}]}>
+        Forgot your password?{' '}
+        <Text
+          onPress={handleSubmit(data => handleForgotPassword(data.email))}
+          style={[styles.linkText, {color: colors.textLinkColor}]}>
+          Click Here.
+        </Text>
+      </Text>
+
       {loading ? (
-        <ActivityIndicator
-          size="large"
-          color="#4CAF50"
-          style={{marginTop: 16}}
-        />
+        <ActivityIndicator size="large" color="#4CAF50" style={styles.loader} />
       ) : (
         <Button
           title="Sign In"

@@ -29,6 +29,16 @@ const styles = StyleSheet.create({
   loader: {
     marginTop: 16,
   },
+  imagePickerContainer: {
+    marginVertical: 16,
+    alignItems: 'center',
+  },
+  profileImage: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    marginTop: 10,
+  },
 });
 
 export default styles;

@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, Text, ActivityIndicator} from 'react-native';
+import {View, Text, ActivityIndicator, Image} from 'react-native';
 import {useForm, Controller} from 'react-hook-form';
 import {zodResolver} from '@hookform/resolvers/zod';
 import styles from './CreateAccount.styles';
@@ -13,8 +13,14 @@ import {
   createAccountSchema,
   CreateAccountSchemaFormData,
 } from '../schemas/CreateAccountSchema';
+import {launchImageLibrary} from 'react-native-image-picker';
+import {useCreateUserMutation} from '../queries';
+import {CreateUserPayload} from '../api/createUserAPI';
+import Toast from 'react-native-toast-message';
+import {AxiosError} from 'axios';
 
 export default function CreateAccount() {
+  const {mutate} = useCreateUserMutation();
   const {colors} = useThemeStore();
   const navigation = useNavigation<AppStackNavigationProp>();
   const [loading, setLoading] = useState(false);
@@ -22,24 +28,67 @@ export default function CreateAccount() {
   const {
     control,
     handleSubmit,
+    setValue,
     formState: {errors},
   } = useForm<CreateAccountSchemaFormData>({
     resolver: zodResolver(createAccountSchema),
     defaultValues: {
-      username: '',
-      password: '',
-      name: '',
-      phoneNumber: '',
+      email: '',
+      password: '123123',
+      firstName: 'firstName-R',
+      lastName: 'lastName-R',
     },
   });
 
-  const handleCreateAccount = async (_data: CreateAccountSchemaFormData) => {
+  // Pick image handler
+  const pickImage = () => {
+    launchImageLibrary({mediaType: 'photo'}, response => {
+      if (response.assets && response.assets.length > 0) {
+        const asset = response.assets[0];
+        setValue('profileImage', {
+          uri: asset.uri!,
+          name: asset.fileName || 'profile.jpg',
+          type: asset.type || 'image/jpeg',
+        });
+      }
+    });
+  };
+
+  const handleCreateAccount = async (data: CreateAccountSchemaFormData) => {
     setLoading(true);
 
-    setTimeout(() => {
-      navigation.navigate('OTP');
-      setLoading(false);
-    }, 2000);
+    const payload: CreateUserPayload = {
+      email: data.email,
+      password: data.password,
+      firstName: data.firstName,
+      lastName: data.lastName,
+      profileImage: data.profileImage,
+    };
+
+    mutate(payload, {
+      onSuccess: res => {
+        Toast.show({
+          type: 'success',
+          text1: 'Account Created!',
+          text2: res.data?.message || 'Check your email for the OTP.',
+        });
+        navigation.navigate('OTP', {email: data.email});
+        setLoading(false);
+      },
+      onError: err => {
+        const error = err as AxiosError<any>;
+
+        Toast.show({
+          type: 'error',
+          text1: 'Signup Failed',
+          text2:
+            error.response?.data?.error?.message || 'Something went wrong.',
+        });
+        setTimeout(() => {
+          setLoading(false);
+        }, 1000); //just a simulation bcz the api is too fast lmao
+      },
+    });
   };
 
   return (
@@ -51,18 +100,18 @@ export default function CreateAccount() {
 
       <Controller
         control={control}
-        name="name"
+        name="firstName"
         render={({field: {onChange, value}}) => (
           <View>
             <TextInput
               iconName="user"
-              placeholder="Enter your name"
+              placeholder="Enter your first name"
               value={value}
               onChangeText={onChange}
               autoCapitalize="words"
             />
-            {errors.name && (
-              <Text style={styles.errorText}>{errors.name.message}</Text>
+            {errors.firstName && (
+              <Text style={styles.errorText}>{errors.firstName.message}</Text>
             )}
           </View>
         )}
@@ -70,18 +119,17 @@ export default function CreateAccount() {
 
       <Controller
         control={control}
-        name="phoneNumber"
+        name="lastName"
         render={({field: {onChange, value}}) => (
           <View>
             <TextInput
-              iconName="phone"
-              placeholder="Enter your phone number"
+              iconName="user"
+              placeholder="Enter your last name"
               value={value}
               onChangeText={onChange}
-              isNumeric={true}
             />
-            {errors.phoneNumber && (
-              <Text style={styles.errorText}>{errors.phoneNumber.message}</Text>
+            {errors.lastName && (
+              <Text style={styles.errorText}>{errors.lastName.message}</Text>
             )}
           </View>
         )}
@@ -89,7 +137,7 @@ export default function CreateAccount() {
 
       <Controller
         control={control}
-        name="username"
+        name="email"
         render={({field: {onChange, value}}) => (
           <View>
             <TextInput
@@ -99,8 +147,8 @@ export default function CreateAccount() {
               onChangeText={onChange}
               autoCapitalize="none"
             />
-            {errors.username && (
-              <Text style={styles.errorText}>{errors.username.message}</Text>
+            {errors.email && (
+              <Text style={styles.errorText}>{errors.email.message}</Text>
             )}
           </View>
         )}
@@ -126,12 +174,21 @@ export default function CreateAccount() {
         )}
       />
 
+      <Controller
+        control={control}
+        name="profileImage"
+        render={({field: {value}}) => (
+          <View style={styles.imagePickerContainer}>
+            <Button title="Upload Profile Image" onPress={pickImage} />
+            {value?.uri && (
+              <Image source={{uri: value.uri}} style={styles.profileImage} />
+            )}
+          </View>
+        )}
+      />
+
       {loading ? (
-        <ActivityIndicator
-          size="large"
-          color="#4CAF50"
-          style={styles.loader}
-        />
+        <ActivityIndicator size="large" color="#4CAF50" style={styles.loader} />
       ) : (
         <Button
           title="Create Account"

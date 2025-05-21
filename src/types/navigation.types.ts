@@ -3,7 +3,7 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 export type AuthenticationStackParamList = {
   Login: undefined;
   CreateAccount: undefined;
-  OTP: undefined;
+  OTP: { email: string };
 };
 
 export type ProtectedStackParamList = {

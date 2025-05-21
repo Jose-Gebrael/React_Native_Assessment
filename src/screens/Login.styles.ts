@@ -18,6 +18,9 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: 12,
   },
+  forgotPasswordText: {
+    fontFamily: 'GothamBook',
+  },
   linkText: {
     fontWeight: 'bold',
   },
@@ -25,6 +28,9 @@ const styles = StyleSheet.create({
     color: 'red',
     fontSize: 12,
     marginBottom: 4,
+  },
+  loader: {
+    marginTop: 16,
   },
 });
 

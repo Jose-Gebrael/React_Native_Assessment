@@ -13,6 +13,18 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: 20,
   },
+  noCodeText: {
+    fontFamily: 'GothamBook',
+    fontSize: PixelRatio.get() * 5,
+    marginBottom: 20,
+  },
+  loader: {
+    marginTop: 16,
+  },
+  linkText: {
+    fontWeight: 'bold',
+    textDecorationLine: 'underline',
+  },
 });
 
 export default styles;
