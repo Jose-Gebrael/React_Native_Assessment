@@ -7,3 +7,4 @@ export * from './useGetProfileFetch';
 export * from './useUpdateProfileMutation';
 export * from './useGetProductsFetch';
 export * from './useSearchProductFetch';
+export * from './useGetProductByIdFetch';

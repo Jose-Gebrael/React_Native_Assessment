@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -6,40 +6,65 @@ import {
   ScrollView,
   TouchableOpacity,
   Dimensions,
+  ActivityIndicator,
 } from 'react-native';
 import {useRoute, RouteProp, useNavigation} from '@react-navigation/native';
-import productsData from '../assets/data/Products.json';
-import {Product} from '../types/product.types';
-import {AppStackNavigationProp} from '../types/navigation.types';
 import Feather from 'react-native-vector-icons/Feather';
 import styles from './ProductDetails.styles';
 import {Title} from '../components/atoms/Title';
 import {Button} from '../components/atoms/Button';
 import {useThemeStore} from '../store/themeStore';
+import {useAuthStore} from '../store/authStore';
+import {useGetProductByIdFetch} from '../queries/useGetProductByIdFetch';
+import {AppStackNavigationProp} from '../types/navigation.types';
+import {Separator} from '../components/atoms/Separator';
 
 type ProductDetailsRouteProp = RouteProp<
   {params: {productId: string}},
   'params'
 >;
 
+const IMAGE_BASE_URL = 'https://backend-practice.eurisko.me';
+
 export default function ProductDetails() {
   const {colors} = useThemeStore();
+  const {getAccessToken} = useAuthStore();
+  const [accessToken, setAccessToken] = useState('');
   const route = useRoute<ProductDetailsRouteProp>();
   const navigation = useNavigation<AppStackNavigationProp>();
   const {productId} = route.params;
 
-  const product = productsData.data.find(
-    item => item._id === productId,
-  ) as Product;
+  useEffect(() => {
+    (async () => {
+      const token = await getAccessToken();
+      if (token) {
+        setAccessToken(token);
+      }
+    })();
+  }, [getAccessToken]);
 
-  const generateRandomRating = (): number => {
-    return parseFloat((Math.random() * (5 - 3) + 3).toFixed(1));
-  };
-  const generateRandomReviews = (): number => {
-    return Math.floor(Math.random() * (200 - 100 + 1)) + 100;
-  };
+  const {
+    data: product,
+    isLoading,
+    error,
+  } = useGetProductByIdFetch(productId, accessToken);
 
-  if (!product) {
+  if (isLoading) {
+    return (
+      <View style={[styles.container, {backgroundColor: colors.appBackground}]}>
+        <ActivityIndicator
+          size="large"
+          color={colors.textLinkColor}
+          style={styles.loadingText}
+        />
+        <Text style={[styles.loadingText, {color: colors.textColor}]}>
+          Fetching Product...
+        </Text>
+      </View>
+    );
+  }
+
+  if (error || !product) {
     return (
       <View style={styles.container}>
         <Text style={styles.errorText}>Product not found</Text>
@@ -59,7 +84,6 @@ export default function ProductDetails() {
               <Feather
                 name="heart"
                 size={24}
-                color="#000"
                 style={[styles.icon, {color: colors.textColor}]}
               />
             </TouchableOpacity>
@@ -67,7 +91,6 @@ export default function ProductDetails() {
               <Feather
                 name="send"
                 size={24}
-                color="#000"
                 style={[styles.icon, {color: colors.textColor}]}
               />
             </TouchableOpacity>
@@ -75,7 +98,7 @@ export default function ProductDetails() {
         </View>
 
         <Image
-          source={{uri: product.images[0].url}}
+          source={{uri: `${IMAGE_BASE_URL}${product.images[0]?.url}`}}
           style={styles.productImage}
         />
 
@@ -86,18 +109,40 @@ export default function ProductDetails() {
         />
         <Title text={`$${product.price.toFixed(2)}`} textAlign="right" />
 
-        <Text style={styles.rating}>
-          ⭐ {generateRandomRating()} ({generateRandomReviews()} reviews)
-        </Text>
-
         <Text style={[styles.subtitle, {color: colors.textColor}]}>
           Description
         </Text>
         <Text style={[styles.description, {color: colors.textColor}]}>
           {product.description}
         </Text>
+        <Separator marginVertical={5} />
+        <Separator marginVertical={5} />
+        <Text style={[styles.subtitle, {color: colors.textColor}]}>
+          Seller Email
+        </Text>
+        <Text style={[styles.description, {color: colors.textColor}]}>
+          {product.user?.email || 'N/A'}
+        </Text>
+        <Separator marginVertical={5} />
+        <Separator marginVertical={5} />
+        <Text style={[styles.subtitle, {color: colors.textColor}]}>
+          Location
+        </Text>
+        <Text style={[styles.description, {color: colors.textColor}]}>
+          {product.location?.name || 'N/A'} — Lat: {product.location?.latitude},
+          Lon: {product.location?.longitude}
+        </Text>
 
-        <View style={{marginBottom: 50}}>
+        <Text style={[styles.subtitle, {color: colors.textColor}]}>
+          Created
+        </Text>
+        <Text style={{color: colors.textColor}}>
+          {product.createdAt
+            ? new Date(product.createdAt).toLocaleString()
+            : 'Date not available'}
+        </Text>
+
+        <View style={styles.addToCartButton}>
           <Button title="Add to Cart" onPress={() => {}} variant="confirm" />
         </View>
       </ScrollView>

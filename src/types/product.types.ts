@@ -4,6 +4,17 @@ export type Product = {
   price: number;
   images: {url: string}[];
   description: string;
+  user?: {
+    _id: string;
+    email: string;
+  };
+  location?: {
+    name: string;
+    longitude: number;
+    latitude: number;
+  };
+  createdAt?: string;
+  updatedAt?: string;
 };
 
 export type GetProductsParams = {

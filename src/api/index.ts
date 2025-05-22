@@ -8,3 +8,4 @@ export * from './getProfileAPI';
 export * from './updateProfileAPI';
 export * from './getProductsAPI';
 export * from './searchProductAPI';
+export * from './getProductByIdAPI';

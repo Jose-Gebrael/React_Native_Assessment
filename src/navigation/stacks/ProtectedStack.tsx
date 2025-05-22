@@ -34,7 +34,11 @@ export default function ProtectedStack() {
       />
 
       {/* Product Details (Separate Screen) */}
-      <Stack.Screen name="ProductDetails" component={ProductDetails} />
+      <Stack.Screen
+        name="ProductDetails"
+        component={ProductDetails}
+        options={{headerShown: false}}
+      />
       <Stack.Screen name="ProfileEdit" component={ProfileEdit} />
     </Stack.Navigator>
   );

@@ -50,11 +50,11 @@ const styles = StyleSheet.create({
     textAlign: 'justify',
   },
   addToCartButton: {
-    backgroundColor: '#4CAF50',
     paddingVertical: 12,
     borderRadius: 8,
     alignItems: 'center',
     marginTop: 20,
+    marginBottom: 50,
   },
   addToCartText: {
     color: '#fff',
@@ -67,6 +67,12 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: 20,
     fontWeight: 'bold',
+  },
+  loadingText: {
+    fontSize: 16,
+    fontFamily: 'GothamBook',
+    textAlign: 'center',
+    marginTop: 40,
   },
 });
 
