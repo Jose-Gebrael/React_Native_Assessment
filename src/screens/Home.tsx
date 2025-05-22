@@ -12,7 +12,7 @@ import {Title} from '../components/atoms/Title';
 import ProductCard from '../components/molecules/ProductCard/ProductCard';
 import {useThemeStore} from '../store/themeStore';
 import {useAuthStore} from '../store/authStore';
-import {useGetProductsFetch} from '../queries/useGetProductsFetch';
+import {useGetProductsFetch, useSearchProductFetch} from '../queries';
 import {Product} from '../types/product.types';
 import Feather from 'react-native-vector-icons/Feather';
 import Modal from 'react-native-modal';
@@ -27,8 +27,9 @@ export default function Home() {
   const [sortBy, setSortBy] = useState<string>('price');
   const [order, setOrder] = useState<'asc' | 'desc'>('asc');
   const [isFilterVisible, setIsFilterVisible] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [isSearching, setIsSearching] = useState(false);
 
-  // Get access token on mount
   useEffect(() => {
     (async () => {
       const token = await getAccessToken();
@@ -41,10 +42,27 @@ export default function Home() {
   const applySorting = (selectedOrder: 'asc' | 'desc') => {
     setSortBy('price');
     setOrder(selectedOrder);
-    setPage(1); // Reset to first page
-    setAllProducts([]); // Clear previous results
-    refetch(); // Trigger API call with new sort
+    setSearchQuery('');
+    setIsSearching(false);
+    setPage(1);
+    setAllProducts([]);
+    refetch();
     setIsFilterVisible(false);
+  };
+
+  const {data: searchResults, refetch: refetchSearch} = useSearchProductFetch(
+    searchQuery,
+    accessToken,
+  );
+
+  const onSearchSubmit = async () => {
+    if (searchQuery.trim()) {
+      setPage(1);
+      setIsSearching(true);
+      await refetchSearch();
+    } else {
+      setIsSearching(false);
+    }
   };
 
   const {data, isFetching, refetch, isRefetching} = useGetProductsFetch({
@@ -57,7 +75,6 @@ export default function Home() {
 
   const hasNextPage = data?.pagination?.hasNextPage ?? false;
 
-  // Accumulate fetched pages
   useEffect(() => {
     if (data?.data) {
       setAllProducts(prev =>
@@ -74,7 +91,7 @@ export default function Home() {
 
   const onRefresh = async () => {
     setPage(1);
-    setAllProducts([]); // Clear old data
+    setAllProducts([]);
     await refetch();
   };
 
@@ -85,7 +102,7 @@ export default function Home() {
   return (
     <View style={[styles.container, {backgroundColor: colors.appBackground}]}>
       <FlatList
-        data={allProducts}
+        data={isSearching ? searchResults || [] : allProducts}
         renderItem={renderProduct}
         keyExtractor={item => item._id}
         numColumns={2}
@@ -110,8 +127,11 @@ export default function Home() {
             <View style={styles.searchContainer}>
               <View style={styles.searchView}>
                 <TextInput
-                  placeholder="Search... (not functional yet)"
+                  placeholder="Search..."
                   isSearch={true}
+                  value={searchQuery}
+                  onChangeText={setSearchQuery}
+                  onSubmitEditing={onSearchSubmit}
                 />
               </View>
               <TouchableOpacity
@@ -131,7 +151,15 @@ export default function Home() {
                 Loading Products...
               </Text>
             </View>
-          ) : null
+          ) : (
+            <View style={styles.noResultsContainer}>
+              <Text style={[styles.noResultsText, {color: colors.textColor}]}>
+                {isSearching
+                  ? 'No products match your search.'
+                  : 'No products found.'}
+              </Text>
+            </View>
+          )
         }
         ListFooterComponent={
           isFetching && hasNextPage ? (

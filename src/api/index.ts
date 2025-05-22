@@ -6,3 +6,5 @@ export * from './resendOTPAPI';
 export * from './forgotPasswordAPI';
 export * from './getProfileAPI';
 export * from './updateProfileAPI';
+export * from './getProductsAPI';
+export * from './searchProductAPI';

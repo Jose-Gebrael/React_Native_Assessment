@@ -58,6 +58,15 @@ const styles = StyleSheet.create({
   desc: {
     paddingVertical: 10,
   },
+  noResultsContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 50,
+  },
+  noResultsText: {
+    fontSize: 16,
+    fontFamily: 'GothamBook',
+  },
 });
 
 export default styles;

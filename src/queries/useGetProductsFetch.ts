@@ -1,5 +1,5 @@
 import {useQuery} from '@tanstack/react-query';
-import {getProductsAPI} from '../api/getProductsAPI';
+import {getProductsAPI} from '../api';
 import type {GetProductsParams} from '../types/product.types';
 
 export const useGetProductsFetch = (params: GetProductsParams) => {
