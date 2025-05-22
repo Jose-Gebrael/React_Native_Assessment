@@ -13,6 +13,51 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     marginBottom: 20,
   },
+  columnWrapperStyle: {
+    justifyContent: 'space-between',
+  },
+  contentContainerStyle: {
+    paddingVertical: 10,
+  },
+  ActivityIndicator: {
+    marginVertical: 10,
+  },
+  loadingInitialContainer: {
+    alignItems: 'center',
+    marginTop: 50,
+  },
+  loadingInitialText: {
+    marginTop: 10,
+    fontSize: 16,
+  },
+  loadingMoreContainer: {
+    alignItems: 'center',
+    paddingVertical: 10,
+  },
+  loadingMoreText: {
+    marginTop: 5,
+    fontSize: 12,
+  },
+  searchView: {
+    flex: 1,
+  },
+  searchContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  filterStyle: {
+    marginLeft: 10,
+  },
+  filterDropdown: {
+    borderRadius: 10,
+    padding: 15,
+  },
+  asc: {
+    paddingVertical: 10,
+  },
+  desc: {
+    paddingVertical: 10,
+  },
 });
 
 export default styles;

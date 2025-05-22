@@ -5,3 +5,13 @@ export type Product = {
   images: {url: string}[];
   description: string;
 };
+
+export type GetProductsParams = {
+  page?: number;
+  limit?: number;
+  minPrice?: number;
+  maxPrice?: number;
+  sortBy?: string;
+  order?: 'asc' | 'desc';
+  accessToken: string;
+};

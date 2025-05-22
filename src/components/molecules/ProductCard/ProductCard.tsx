@@ -14,10 +14,6 @@ export default function ProductCard({product}: ProductCardProps) {
   const navigation = useNavigation<AppStackNavigationProp>();
   const {colors} = useThemeStore();
 
-  const generateRandomRating = (): number => {
-    return parseFloat((Math.random() * (5 - 3) + 3).toFixed(1));
-  };
-
   return (
     <TouchableOpacity
       style={[
@@ -28,17 +24,24 @@ export default function ProductCard({product}: ProductCardProps) {
       onPress={() =>
         navigation.navigate('ProductDetails', {productId: product._id})
       }>
-      <Image
-        source={{uri: product.images[0].url}}
-        style={styles.productImage}
-      />
+      {product.images?.length > 0 ? (
+        <Image
+          source={{
+            uri: `https://backend-practice.eurisko.me${product.images[0].url}`,
+          }}
+          style={styles.productImage}
+        />
+      ) : (
+        <View>
+          <Text style={{color: colors.textColor}}>No Image</Text>
+        </View>
+      )}
       <Text
         style={[styles.productTitle, {color: colors.textColor}]}
         numberOfLines={1}>
         {product.title}
       </Text>
       <View style={styles.productDetails}>
-        <Text style={styles.productRating}>⭐ {generateRandomRating()}</Text>
         <Text style={[styles.productPrice, {color: colors.textLinkColor}]}>
           ${product.price.toFixed(2)}
         </Text>
