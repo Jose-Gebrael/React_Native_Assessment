@@ -34,7 +34,6 @@ axiosInstance.interceptors.response.use(
           .getState()
           .login(
             newAccessToken,
-            useAuthStore.getState().userId ?? 'unknown',
             newRefreshToken,
           );
 

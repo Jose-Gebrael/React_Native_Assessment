@@ -30,8 +30,8 @@ export default function Login() {
   } = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
-      email: 'eurisko@gmail.com', //Empty this before Handing in assignment
-      password: 'academy2025', //Empty this before Handing in assignment
+      email: '', //Empty this before Handing in assignment
+      password: '123123', //Empty this before Handing in assignment
     },
   });
 
