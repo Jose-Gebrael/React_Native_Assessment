@@ -5,3 +5,4 @@ export * from './axiosInstance';
 export * from './resendOTPAPI';
 export * from './forgotPasswordAPI';
 export * from './getProfileAPI';
+export * from './updateProfileAPI';

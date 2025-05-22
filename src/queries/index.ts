@@ -4,3 +4,4 @@ export * from './useLoginMutation';
 export * from './useResendOTPMutation';
 export * from './useForgotPasswordMutation';
 export * from './useGetProfileFetch';
+export * from './useUpdateProfileMutation';

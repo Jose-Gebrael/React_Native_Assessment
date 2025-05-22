@@ -5,9 +5,6 @@ import Settings from '../../screens/Settings';
 import Profile from '../../screens/Profile';
 import Feather from 'react-native-vector-icons/Feather';
 import {useThemeStore} from '../../store/themeStore';
-import {Text} from 'react-native';
-import styles from './BottomTabs.styles';
-// import {useNavigation} from '@react-navigation/native';
 
 const Tab = createBottomTabNavigator();
 
@@ -42,32 +39,13 @@ const screenOptions =
     headerShown: true,
   });
 
-const ProfileHeaderRight = () => {
-  const {colors} = useThemeStore.getState();
-
-  return (
-    <Text
-      onPress={() => {
-        console.log('Edit pressed');
-      }}
-      style={[styles.headerRightText, {color: colors.textLinkColor}]}>
-      Edit
-    </Text>
-  );
-};
-
-export const profileOptions = {
-  headerRight: () => <ProfileHeaderRight />,
-};
-
 export default function BottomTabs() {
   const {colors} = useThemeStore();
 
   return (
     <Tab.Navigator screenOptions={screenOptions(colors)}>
       <Tab.Screen name="Home" component={Home} />
-      <Tab.Screen name="Profile" component={Profile} options={profileOptions} />
-
+      <Tab.Screen name="Profile" component={Profile} />
       <Tab.Screen name="Settings" component={Settings} />
     </Tab.Navigator>
   );

@@ -11,6 +11,8 @@ export type ProtectedStackParamList = {
   ProductDetails: {productId: string};
   Settings: undefined;
   BottomTabs: undefined;
+  Profile: undefined;
+  ProfileEdit: undefined;
 };
 
 export type AppStackParamList = AuthenticationStackParamList &

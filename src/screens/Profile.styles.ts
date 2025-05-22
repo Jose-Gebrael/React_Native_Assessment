@@ -8,6 +8,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
   },
   subtitle: {
+    marginTop:10,
     fontFamily: 'GothamBook',
     fontSize: PixelRatio.get() * 8,
     textAlign: 'left',
@@ -16,11 +17,10 @@ const styles = StyleSheet.create({
     color: 'red',
   },
   contentContainerStyle: {
-    alignItems: 'center',
     marginTop: 20,
   },
   mainViewStyle: {
-    alignItems: 'center',
+    justifyContent: 'center',
   },
   profileImg: {
     width: 120,
@@ -45,6 +45,14 @@ const styles = StyleSheet.create({
   userName: {
     fontSize: 18,
     fontWeight: 'bold',
+  },
+  editText: {
+    marginRight: 15,
+    fontWeight: 'bold',
+  },
+  disabled: {
+    color: 'gray',
+    opacity: 0.5,
   },
 });
 
