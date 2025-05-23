@@ -25,6 +25,9 @@ const styles = StyleSheet.create({
     resizeMode: 'cover',
     borderRadius: 8,
     marginBottom: 16,
+    // width: '100%',
+    // height: 300,
+    // borderRadius: 10,
   },
   detailsContainer: {
     paddingHorizontal: 16,
@@ -73,6 +76,17 @@ const styles = StyleSheet.create({
     fontFamily: 'GothamBook',
     textAlign: 'center',
     marginTop: 40,
+  },
+  imageSwiper: {
+    height: 300,
+    marginBottom: 20,
+  },
+  mapContainer: {
+    height: 200,
+    marginTop: 20,
+  },
+  mapStyle: {
+    flex: 1,
   },
 });
 

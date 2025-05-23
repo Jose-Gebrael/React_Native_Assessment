@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Dimensions,
   ActivityIndicator,
+  Linking,
 } from 'react-native';
 import {useRoute, RouteProp, useNavigation} from '@react-navigation/native';
 import Feather from 'react-native-vector-icons/Feather';
@@ -15,9 +16,11 @@ import {Title} from '../components/atoms/Title';
 import {Button} from '../components/atoms/Button';
 import {useThemeStore} from '../store/themeStore';
 import {useAuthStore} from '../store/authStore';
-import {useGetProductByIdFetch} from '../queries/useGetProductByIdFetch';
+import {useGetProductByIdFetch} from '../queries';
 import {AppStackNavigationProp} from '../types/navigation.types';
 import {Separator} from '../components/atoms/Separator';
+import Swiper from 'react-native-swiper';
+import MapView, {Marker} from 'react-native-maps';
 
 type ProductDetailsRouteProp = RouteProp<
   {params: {productId: string}},
@@ -97,10 +100,22 @@ export default function ProductDetails() {
           </View>
         </View>
 
-        <Image
-          source={{uri: `${IMAGE_BASE_URL}${product.images[0]?.url}`}}
-          style={styles.productImage}
-        />
+        <Swiper
+          style={styles.imageSwiper}
+          showsPagination
+          autoplay
+          height={300} // Or match your productImage height
+          dotColor="#ccc"
+          activeDotColor={colors.textLinkColor}>
+          {product.images.map((img, index) => (
+            <Image
+              key={index}
+              source={{uri: `${IMAGE_BASE_URL}${img.url}`}}
+              style={styles.productImage}
+              resizeMode="cover"
+            />
+          ))}
+        </Swiper>
 
         <Title
           text={product.title}
@@ -120,27 +135,52 @@ export default function ProductDetails() {
         <Text style={[styles.subtitle, {color: colors.textColor}]}>
           Seller Email
         </Text>
-        <Text style={[styles.description, {color: colors.textColor}]}>
-          {product.user?.email || 'N/A'}
-        </Text>
+        <TouchableOpacity
+          onPress={() =>
+            product.user?.email &&
+            Linking.openURL(`mailto:${product.user.email}`)
+          }>
+          <Text style={[styles.description, {color: colors.textLinkColor}]}>
+            {product.user?.email || 'N/A'}
+          </Text>
+        </TouchableOpacity>
+
         <Separator marginVertical={5} />
         <Separator marginVertical={5} />
         <Text style={[styles.subtitle, {color: colors.textColor}]}>
           Location
         </Text>
-        <Text style={[styles.description, {color: colors.textColor}]}>
-          {product.location?.name || 'N/A'} — Lat: {product.location?.latitude},
-          Lon: {product.location?.longitude}
-        </Text>
-
-        <Text style={[styles.subtitle, {color: colors.textColor}]}>
-          Created
-        </Text>
-        <Text style={{color: colors.textColor}}>
-          {product.createdAt
-            ? new Date(product.createdAt).toLocaleString()
-            : 'Date not available'}
-        </Text>
+        {product.location && (
+          <View style={styles.mapContainer}>
+            <MapView
+              style={styles.mapStyle}
+              initialRegion={{
+                latitude: product.location.latitude,
+                longitude: product.location.longitude,
+                latitudeDelta: 0.01,
+                longitudeDelta: 0.01,
+              }}>
+              <Marker
+                coordinate={{
+                  latitude: product.location.latitude,
+                  longitude: product.location.longitude,
+                }}
+                title={product.location.name}
+                description={`Lat: ${product.location.latitude}, Lon: ${product.location.longitude}`}
+              />
+            </MapView>
+            <TouchableOpacity
+              onPress={() =>
+                Linking.openURL(
+                  `https://www.google.com/maps/search/?api=1&query=${product.location.latitude},${product.location.longitude}`,
+                )
+              }>
+              <Text style={{color: colors.textLinkColor}}>
+                Open in Google Maps
+              </Text>
+            </TouchableOpacity>
+          </View>
+        )}
 
         <View style={styles.addToCartButton}>
           <Button title="Add to Cart" onPress={() => {}} variant="confirm" />

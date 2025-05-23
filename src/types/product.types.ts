@@ -8,7 +8,7 @@ export type Product = {
     _id: string;
     email: string;
   };
-  location?: {
+  location: {
     name: string;
     longitude: number;
     latitude: number;
