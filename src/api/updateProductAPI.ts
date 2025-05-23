@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axiosInstance from './axiosInstance';
 
 interface UpdateProductParams {
   productId: string;
@@ -11,15 +11,11 @@ export const updateProductAPI = async ({
   accessToken,
   formData,
 }: UpdateProductParams) => {
-  const response = await axios.put(
-    `https://backend-practice.eurisko.me/api/products/${productId}`,
-    formData,
-    {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-        'Content-Type': 'multipart/form-data',
-      },
+  const response = await axiosInstance.put(`/products/${productId}`, formData, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      'Content-Type': 'multipart/form-data',
     },
-  );
+  });
   return response.data;
 };

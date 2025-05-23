@@ -1,18 +1,15 @@
-import axios from 'axios';
+import axiosInstance from './axiosInstance';
 import {Product} from '../types/product.types';
 
 export const searchProductAPI = async (
   query: string,
   accessToken: string,
 ): Promise<Product[]> => {
-  const res = await axios.get(
-    'https://backend-practice.eurisko.me/api/products/search',
-    {
-      params: {query},
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
+  const res = await axiosInstance.get('/products/search', {
+    params: {query},
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
     },
-  );
+  });
   return res.data.data;
 };

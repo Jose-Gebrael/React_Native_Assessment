@@ -7,6 +7,7 @@
 - **Endpoint**: `POST /auth/signup`
 - **Description**: Register a new user, once success, an OTP will be sent to the user's email.
 - **Request Body**:
+
   - Form Data:
 
     ```json
@@ -25,7 +26,7 @@
   {
     "success": true,
     "data": {
-      "message": "User created successfully. Please check your email for verification.",
+      "message": "User created successfully. Please check your email for verification."
     }
   }
   ```
@@ -35,6 +36,7 @@
 - **Endpoint**: `POST /auth/verify-otp`
 - **Description**: Verify the user by using the OTP received from the sign-up step.
 - **Request Body**:
+
   - Form Data:
 
     ```json
@@ -50,8 +52,8 @@
   {
     "success": true,
     "data": {
-        "message": "Email verified successfully",
-        "isEmailVerified": true
+      "message": "Email verified successfully",
+      "isEmailVerified": true
     }
   }
   ```
@@ -61,6 +63,7 @@
 - **Endpoint**: `POST /auth/resend-verification-otp`
 - **Description**: Resend the OTP to the user's email.
 - **Request Body**:
+
   - Form Data:
 
     ```json
@@ -75,7 +78,7 @@
   {
     "success": true,
     "data": {
-        "message": "Verification OTP sent successfully"
+      "message": "Verification OTP sent successfully"
     }
   }
   ```
@@ -126,7 +129,7 @@
     "success": true,
     "data": {
       "accessToken": "string", // New and fresh access token
-      "refreshToken": "string", // New refresh token to be used later.
+      "refreshToken": "string" // New refresh token to be used later.
     }
   }
   ```
@@ -149,7 +152,7 @@
   {
     "success": true,
     "data": {
-        "message": "Password reset email sent successfully"
+      "message": "Password reset email sent successfully"
     }
   }
   ```
@@ -160,6 +163,7 @@
 - **Description**: Update user's profile information
 - **Authentication**: Required
 - **Request Body**:
+
   - Form Data:
 
     ```json
@@ -322,7 +326,9 @@
 - **Description**: Create a new product listing
 - **Authentication**: Required
 - **Request Body**:
+
   - Form Data:
+
     - `title`: Product title
     - `description`: Product description
     - `price`: Product price
@@ -337,6 +343,7 @@
       ```
 
     - `images`: Up to 5 product images (multipart/form-data)
+
 - **Response**: Created product details
 
 ### 5. Update Product

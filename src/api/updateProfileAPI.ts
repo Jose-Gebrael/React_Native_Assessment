@@ -1,5 +1,4 @@
-// queries/updateProfileAPI.ts
-import axios from 'axios';
+import axiosInstance from './axiosInstance';
 
 export interface UpdateProfilePayload {
   firstName: string;
@@ -30,16 +29,12 @@ export const updateProfileAPI = async ({
     } as any);
   }
 
-  const response = await axios.put(
-    'https://backend-practice.eurisko.me/api/user/profile',
-    formData,
-    {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-        Authorization: `Bearer ${accessToken}`,
-      },
-    }
-  );
+  const response = await axiosInstance.put('/user/profile', formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
 
   return response.data;
 };

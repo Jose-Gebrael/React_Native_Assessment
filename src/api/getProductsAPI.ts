@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axiosInstance from './axiosInstance';
 
 export interface GetProductsParams {
   page?: number;
@@ -13,15 +13,12 @@ export interface GetProductsParams {
 export const getProductsAPI = async (params: GetProductsParams) => {
   const {accessToken, ...query} = params;
 
-  const response = await axios.get(
-    'https://backend-practice.eurisko.me/api/products',
-    {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-      params: query,
+  const response = await axiosInstance.get('/products', {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
     },
-  );
+    params: query,
+  });
 
   return response.data;
 };

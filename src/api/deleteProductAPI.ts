@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axiosInstance from './axiosInstance';
 
 export const deleteProductAPI = async ({
   productId,
@@ -7,13 +7,10 @@ export const deleteProductAPI = async ({
   productId: string;
   accessToken: string;
 }) => {
-  const response = await axios.delete(
-    `https://backend-practice.eurisko.me/api/products/${productId}`,
-    {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
+  const response = await axiosInstance.delete(`/products/${productId}`, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
     },
-  );
+  });
   return response.data;
 };

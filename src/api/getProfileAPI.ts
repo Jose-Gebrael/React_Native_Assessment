@@ -1,7 +1,7 @@
-import axios from 'axios';
+import axiosInstance from './axiosInstance';
 
 export const getProfileAPI = async (accessToken: string) => {
-  const response = await axios.get('https://backend-practice.eurisko.me/api/user/profile', {
+  const response = await axiosInstance.get('/user/profile', {
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },
