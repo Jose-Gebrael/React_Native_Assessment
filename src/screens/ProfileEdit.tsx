@@ -7,13 +7,14 @@ import {
   ScrollView,
   Image,
   TouchableOpacity,
+  Alert,
 } from 'react-native';
 import styles from './ProfileEdit.styles';
 import {Title} from '../components/atoms/Title';
 import {useAuthStore} from '../store/authStore';
 import {useThemeStore} from '../store/themeStore';
 import {useGetProfileFetch} from '../queries/useGetProfileFetch';
-import {launchImageLibrary} from 'react-native-image-picker';
+import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import {useUpdateProfileMutation} from '../queries';
 import Toast from 'react-native-toast-message';
 import {useNavigation} from '@react-navigation/native';
@@ -71,11 +72,29 @@ export default function ProfileEdit() {
   }, [data, setValue]);
 
   const handlePickImage = () => {
-    launchImageLibrary({mediaType: 'photo'}, res => {
-      if (res.assets && res.assets.length > 0) {
-        setProfileImage(res.assets[0].uri || null);
-      }
-    });
+    Alert.alert('Select Image Source', 'Choose image from:', [
+      {
+        text: 'Camera',
+        onPress: () => {
+          launchCamera({mediaType: 'photo'}, res => {
+            if (res.assets && res.assets.length > 0) {
+              setProfileImage(res.assets[0].uri || null);
+            }
+          });
+        },
+      },
+      {
+        text: 'Gallery',
+        onPress: () => {
+          launchImageLibrary({mediaType: 'photo'}, res => {
+            if (res.assets && res.assets.length > 0) {
+              setProfileImage(res.assets[0].uri || null);
+            }
+          });
+        },
+      },
+      {text: 'Cancel', style: 'cancel'},
+    ]);
   };
 
   const onSubmit = (formData: ProfileEditFormData) => {

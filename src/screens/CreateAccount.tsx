@@ -1,5 +1,12 @@
 import React, {useState} from 'react';
-import {View, Text, ActivityIndicator, Image} from 'react-native';
+import {
+  View,
+  Text,
+  ActivityIndicator,
+  Image,
+  PermissionsAndroid,
+  Platform,
+} from 'react-native';
 import {useForm, Controller} from 'react-hook-form';
 import {zodResolver} from '@hookform/resolvers/zod';
 import styles from './CreateAccount.styles';
@@ -13,7 +20,12 @@ import {
   createAccountSchema,
   CreateAccountSchemaFormData,
 } from '../schemas/CreateAccountSchema';
-import {launchImageLibrary} from 'react-native-image-picker';
+import {
+  launchCamera,
+  launchImageLibrary,
+  Asset,
+} from 'react-native-image-picker';
+import {Alert} from 'react-native';
 import {useCreateUserMutation} from '../queries';
 import {CreateUserPayload} from '../api/createUserAPI';
 import Toast from 'react-native-toast-message';
@@ -40,18 +52,85 @@ export default function CreateAccount() {
     },
   });
 
-  // Pick image handler
-  const pickImage = () => {
-    launchImageLibrary({mediaType: 'photo'}, response => {
-      if (response.assets && response.assets.length > 0) {
-        const asset = response.assets[0];
-        setValue('profileImage', {
-          uri: asset.uri!,
-          name: asset.fileName || 'profile.jpg',
-          type: asset.type || 'image/jpeg',
-        });
-      }
-    });
+  const requestCameraPermission = async (): Promise<boolean> => {
+    if (Platform.OS !== 'android') {
+      return true;
+    }
+
+    const granted = await PermissionsAndroid.request(
+      PermissionsAndroid.PERMISSIONS.CAMERA,
+      {
+        title: 'Camera Permission',
+        message: 'App needs access to your camera',
+        buttonNeutral: 'Ask Me Later',
+        buttonNegative: 'Cancel',
+        buttonPositive: 'OK',
+      },
+    );
+
+    return granted === PermissionsAndroid.RESULTS.GRANTED;
+  };
+
+  const handleImageSelection = (asset: Asset) => {
+    if (asset.uri) {
+      setValue('profileImage', {
+        uri: asset.uri,
+        name: asset.fileName || 'profile.jpg',
+        type: asset.type || 'image/jpeg',
+      });
+    }
+  };
+
+  const pickImage = async () => {
+    Alert.alert('Select Image Source', 'Choose an image from:', [
+      {
+        text: 'Camera',
+        onPress: async () => {
+          const hasPermission = await requestCameraPermission();
+          if (!hasPermission) {
+            Alert.alert('Permission Denied', 'Camera permission is required.');
+            return;
+          }
+
+          launchCamera({mediaType: 'photo'}, response => {
+            if (response.didCancel) {
+              return;
+            }
+            if (response.errorCode) {
+              Alert.alert(
+                'Camera Error',
+                response.errorMessage || 'Unknown error',
+              );
+              return;
+            }
+            if (response.assets && response.assets.length > 0) {
+              handleImageSelection(response.assets[0]);
+            }
+          });
+        },
+      },
+      {
+        text: 'Gallery',
+        onPress: () => {
+          launchImageLibrary({mediaType: 'photo'}, response => {
+            if (response.didCancel) {
+              return;
+            }
+            if (response.errorCode) {
+              Alert.alert(
+                'Gallery Error',
+                response.errorMessage || 'Unknown error',
+              );
+              return;
+            }
+            if (response.assets && response.assets.length > 0) {
+              handleImageSelection(response.assets[0]);
+            }
+          });
+        },
+      },
+      {text: 'Cancel', style: 'cancel'},
+    ]);
   };
 
   const handleCreateAccount = async (data: CreateAccountSchemaFormData) => {
