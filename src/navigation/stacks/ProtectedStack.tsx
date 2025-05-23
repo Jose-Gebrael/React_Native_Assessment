@@ -5,6 +5,7 @@ import ProductDetails from '../../screens/ProductDetails';
 import ProfileEdit from '../../screens/ProfileEdit';
 import CreateProduct from '../../screens/CreateProduct';
 import ProductEdit from '../../screens/ProductEdit';
+import MyProducts from '../../screens/MyProducts';
 import {ProtectedStackParamList} from '../../types/navigation.types';
 import {useThemeStore} from '../../store/themeStore';
 
@@ -44,6 +45,7 @@ export default function ProtectedStack() {
       <Stack.Screen name="ProfileEdit" component={ProfileEdit} />
       <Stack.Screen name="CreateProduct" component={CreateProduct} />
       <Stack.Screen name="ProductEdit" component={ProductEdit} />
+      <Stack.Screen name="MyProducts" component={MyProducts} />
     </Stack.Navigator>
   );
 }

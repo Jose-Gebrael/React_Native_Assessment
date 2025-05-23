@@ -16,6 +16,7 @@ export type ProtectedStackParamList = {
   ProfileEdit: undefined;
   CreateProduct: undefined;
   ProductEdit: { productId: string };
+  MyProducts: undefined;
 };
 
 

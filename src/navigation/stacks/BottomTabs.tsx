@@ -3,6 +3,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Home from '../../screens/Home';
 import Settings from '../../screens/Settings';
 import Profile from '../../screens/Profile';
+import Cart from '../../screens/Cart';
 import Feather from 'react-native-vector-icons/Feather';
 import {useThemeStore} from '../../store/themeStore';
 
@@ -23,6 +24,7 @@ const screenOptions =
         Home: 'home',
         Settings: 'settings',
         Profile: 'user',
+        Cart: 'shopping-cart',
       };
       const iconName = icons[route.name] || 'circle';
 
@@ -45,6 +47,7 @@ export default function BottomTabs() {
   return (
     <Tab.Navigator screenOptions={screenOptions(colors)}>
       <Tab.Screen name="Home" component={Home} />
+      <Tab.Screen name="Cart" component={Cart} />
       <Tab.Screen name="Profile" component={Profile} />
       <Tab.Screen name="Settings" component={Settings} />
     </Tab.Navigator>

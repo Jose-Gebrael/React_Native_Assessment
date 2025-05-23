@@ -12,6 +12,21 @@ const styles = StyleSheet.create({
     fontSize: PixelRatio.get() * 8,
     textAlign: 'left',
   },
+  rowContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  lefticon: {
+    marginVertical: 5,
+    alignSelf: 'flex-start',
+  },
+  midText: {
+    alignSelf: 'center',
+  },
+  righticon: {
+    marginVertical: 5,
+    alignSelf: 'flex-end',
+  },
 });
 
 export default styles;
