@@ -9,3 +9,5 @@ export * from './updateProfileAPI';
 export * from './getProductsAPI';
 export * from './searchProductAPI';
 export * from './getProductByIdAPI';
+export * from './createProductAPI';
+export * from './deleteProductAPI';

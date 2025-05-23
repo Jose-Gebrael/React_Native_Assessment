@@ -16,11 +16,14 @@ import {Title} from '../components/atoms/Title';
 import {Button} from '../components/atoms/Button';
 import {useThemeStore} from '../store/themeStore';
 import {useAuthStore} from '../store/authStore';
-import {useGetProductByIdFetch} from '../queries';
+import {useGetProductByIdFetch, useGetProfileFetch} from '../queries';
 import {AppStackNavigationProp} from '../types/navigation.types';
 import {Separator} from '../components/atoms/Separator';
 import Swiper from 'react-native-swiper';
 import MapView, {Marker} from 'react-native-maps';
+import {useDeleteProductMutation} from '../queries';
+import {Alert} from 'react-native';
+import Toast from 'react-native-toast-message';
 
 type ProductDetailsRouteProp = RouteProp<
   {params: {productId: string}},
@@ -36,6 +39,8 @@ export default function ProductDetails() {
   const route = useRoute<ProductDetailsRouteProp>();
   const navigation = useNavigation<AppStackNavigationProp>();
   const {productId} = route.params;
+  const {mutate: deleteProduct, isPending: isDeleting} =
+    useDeleteProductMutation();
 
   useEffect(() => {
     (async () => {
@@ -51,6 +56,9 @@ export default function ProductDetails() {
     isLoading,
     error,
   } = useGetProductByIdFetch(productId, accessToken);
+
+  const {data: profileData, isLoading: isProfileLoading} =
+    useGetProfileFetch(accessToken);
 
   if (isLoading) {
     return (
@@ -79,8 +87,13 @@ export default function ProductDetails() {
     <View style={[styles.container, {backgroundColor: colors.appBackground}]}>
       <ScrollView style={styles.detailsContainer}>
         <View style={styles.header}>
-          <TouchableOpacity onPress={() => navigation.goBack()}>
-            <Feather name="arrow-left" size={24} color="#fff" />
+          <TouchableOpacity
+            onPress={() => navigation.navigate('BottomTabs', {screen: 'Home'})}>
+            <Feather
+              name="arrow-left"
+              size={24}
+              style={[styles.icon, {color: colors.textColor}]}
+            />
           </TouchableOpacity>
           <View style={styles.iconContainer}>
             <TouchableOpacity onPress={() => {}}>
@@ -99,12 +112,11 @@ export default function ProductDetails() {
             </TouchableOpacity>
           </View>
         </View>
-
+        <Title text="Product Details" textAlign="left" />
         <Swiper
           style={styles.imageSwiper}
           showsPagination
           autoplay
-          height={300} // Or match your productImage height
           dotColor="#ccc"
           activeDotColor={colors.textLinkColor}>
           {product.images.map((img, index) => (
@@ -185,6 +197,68 @@ export default function ProductDetails() {
         <View style={styles.addToCartButton}>
           <Button title="Add to Cart" onPress={() => {}} variant="confirm" />
         </View>
+
+        {!isProfileLoading &&
+          profileData?.data?.user?.email === product.user?.email && (
+            <View style={styles.ownerActions}>
+              <Button
+                title="Edit"
+                variant="confirm"
+                style={styles.buttons}
+                onPress={() => {
+                  // TODO: Navigate to edit screen with productId
+                }}
+              />
+              <Button
+                title={isDeleting ? 'Deleting...' : 'Delete'}
+                variant="logout"
+                style={styles.buttons}
+                onPress={() => {
+                  Alert.alert(
+                    'Confirm Deletion',
+                    'Are you sure you want to delete this product?',
+                    [
+                      {text: 'Cancel', style: 'cancel'},
+                      {
+                        text: 'Delete',
+                        style: 'destructive',
+                        onPress: () => {
+                          deleteProduct(
+                            {productId: product._id, accessToken},
+                            {
+                              onSuccess: () => {
+                                Toast.show({
+                                  type: 'success',
+                                  text1:
+                                    'Product deleted successfully! Please refresh.',
+                                });
+                                navigation.reset({
+                                  index: 0,
+                                  routes: [
+                                    {
+                                      name: 'BottomTabs',
+                                      params: {screen: 'Home'},
+                                    },
+                                  ],
+                                });
+                              },
+                              onError: () => {
+                                Toast.show({
+                                  type: 'error',
+                                  text1: 'Deletion failed',
+                                  text2: 'Could not delete the product.',
+                                });
+                              },
+                            },
+                          );
+                        },
+                      },
+                    ],
+                  );
+                }}
+              />
+            </View>
+          )}
       </ScrollView>
     </View>
   );

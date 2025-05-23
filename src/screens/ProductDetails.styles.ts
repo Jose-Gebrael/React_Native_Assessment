@@ -57,7 +57,6 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     alignItems: 'center',
     marginTop: 20,
-    marginBottom: 50,
   },
   addToCartText: {
     color: '#fff',
@@ -80,6 +79,7 @@ const styles = StyleSheet.create({
   imageSwiper: {
     height: 300,
     marginBottom: 20,
+    marginTop: 20,
   },
   mapContainer: {
     height: 200,
@@ -87,6 +87,17 @@ const styles = StyleSheet.create({
   },
   mapStyle: {
     flex: 1,
+  },
+  ownerActions: {
+    marginTop: 20,
+    paddingHorizontal: 20,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    gap: 20,
+  },
+  buttons: {
+    width: 100,
+    marginBottom: 20,
   },
 });
 

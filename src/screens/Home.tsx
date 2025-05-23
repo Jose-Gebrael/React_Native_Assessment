@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useLayoutEffect, useCallback} from 'react';
 import {
   View,
   FlatList,
@@ -17,6 +17,20 @@ import {Product} from '../types/product.types';
 import Feather from 'react-native-vector-icons/Feather';
 import Modal from 'react-native-modal';
 import {TouchableOpacity} from 'react-native';
+import {useNavigation, useFocusEffect} from '@react-navigation/native';
+import {AppStackNavigationProp} from '../types/navigation.types';
+
+const CreateHeaderButton = ({
+  onPress,
+  color,
+}: {
+  onPress: () => void;
+  color: string;
+}) => (
+  <Text onPress={onPress} style={[styles.createText, {color}]}>
+    Create
+  </Text>
+);
 
 export default function Home() {
   const {colors} = useThemeStore();
@@ -29,6 +43,16 @@ export default function Home() {
   const [isFilterVisible, setIsFilterVisible] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [isSearching, setIsSearching] = useState(false);
+  const navigation = useNavigation<AppStackNavigationProp>();
+  const headerRight = useCallback(
+    () => (
+      <CreateHeaderButton
+        onPress={() => navigation.navigate('CreateProduct')}
+        color={colors.textLinkColor}
+      />
+    ),
+    [navigation, colors.textLinkColor],
+  );
 
   useEffect(() => {
     (async () => {
@@ -38,6 +62,12 @@ export default function Home() {
       }
     })();
   }, [getAccessToken]);
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight,
+    });
+  }, [navigation, headerRight]);
 
   const applySorting = (selectedOrder: 'asc' | 'desc') => {
     setSortBy('price');
@@ -73,15 +103,26 @@ export default function Home() {
     order: order,
   });
 
+  useFocusEffect(
+    useCallback(() => {
+      setPage(1);
+      setAllProducts([]);
+      refetch();
+    }, [refetch]),
+  );
+
   const hasNextPage = data?.pagination?.hasNextPage ?? false;
 
   useEffect(() => {
-    if (data?.data) {
-      setAllProducts(prev =>
-        page === 1 ? data.data : [...prev, ...data.data],
-      );
-    }
-  }, [data, page]);
+  if (data?.data) {
+    setAllProducts(prev => {
+      const ids = new Set(prev.map(p => p._id));
+      const newProducts = data.data.filter((p: Product) => !ids.has(p._id));
+      return page === 1 ? data.data : [...prev, ...newProducts];
+    });
+  }
+}, [data, page]);
+
 
   const handleLoadMore = () => {
     if (!isFetching && hasNextPage) {
@@ -104,7 +145,7 @@ export default function Home() {
       <FlatList
         data={isSearching ? searchResults || [] : allProducts}
         renderItem={renderProduct}
-        keyExtractor={item => item._id}
+        keyExtractor={item => String(item._id)}
         numColumns={2}
         columnWrapperStyle={styles.columnWrapperStyle}
         contentContainerStyle={styles.contentContainerStyle}

@@ -67,6 +67,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: 'GothamBook',
   },
+  createText: {
+    marginRight: 20,
+    fontWeight: 'bold',
+  },
 });
 
 export default styles;

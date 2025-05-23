@@ -8,3 +8,5 @@ export * from './useUpdateProfileMutation';
 export * from './useGetProductsFetch';
 export * from './useSearchProductFetch';
 export * from './useGetProductByIdFetch';
+export * from './useCreateProductMutation';
+export * from './useDeleteProductMutation';
