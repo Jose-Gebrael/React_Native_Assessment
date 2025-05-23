@@ -38,6 +38,30 @@ const styles = StyleSheet.create({
   topTitle: {
     marginTop: 30,
   },
+  imageWrapper: {
+    position: 'relative',
+    marginRight: 10,
+  },
+
+  removeIcon: {
+    position: 'absolute',
+    top: -5,
+    right: -5,
+    backgroundColor: 'rgba(0,0,0,0.6)',
+    borderRadius: 12,
+    width: 24,
+    height: 24,
+    alignItems: 'center',
+    justifyContent: 'center',
+    zIndex: 1,
+  },
+
+  removeIconText: {
+    color: 'white',
+    fontSize: 18,
+    fontWeight: 'bold',
+    lineHeight: 20,
+  },
 });
 
 export default styles;

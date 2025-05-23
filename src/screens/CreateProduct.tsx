@@ -1,9 +1,10 @@
 import React, {useState, useEffect} from 'react';
-import {ScrollView, Text, TouchableOpacity, Image} from 'react-native';
+import {ScrollView, Text, TouchableOpacity, Image, View} from 'react-native';
 import {useForm, Controller} from 'react-hook-form';
 import {zodResolver} from '@hookform/resolvers/zod';
 import MapView, {Marker, MapPressEvent} from 'react-native-maps';
-import {launchImageLibrary} from 'react-native-image-picker';
+import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+import {Alert} from 'react-native';
 import Toast from 'react-native-toast-message';
 import {Title} from '../components/atoms/Title';
 import {TextInput} from '../components/atoms/TextInput';
@@ -33,8 +34,6 @@ export default function CreateProduct() {
 
   const {mutate, isPending} = useCreateProductMutation();
 
-
-
   const {
     control,
     handleSubmit,
@@ -59,11 +58,60 @@ export default function CreateProduct() {
   }, [getAccessToken]);
 
   const pickImages = () => {
-    launchImageLibrary({mediaType: 'photo', selectionLimit: 5}, response => {
-      if (response.assets) {
-        setImages(response.assets);
-      }
-    });
+    Alert.alert(
+      'Upload Image',
+      'Choose a method',
+      [
+        {
+          text: 'Camera',
+          onPress: () => {
+            launchCamera({mediaType: 'photo'}, response => {
+              if (response.assets && response.assets.length > 0) {
+                const newAssets = response.assets;
+                const total = images.length + newAssets.length;
+                if (total <= 5) {
+                  setImages(prev => [...prev, ...newAssets]);
+                } else {
+                  Toast.show({
+                    type: 'error',
+                    text1: 'Limit Exceeded',
+                    text2: 'You can only upload up to 5 images.',
+                  });
+                }
+              }
+            });
+          },
+        },
+        {
+          text: 'Gallery',
+          onPress: () => {
+            launchImageLibrary(
+              {mediaType: 'photo', selectionLimit: 5 - images.length},
+              response => {
+                if (response.assets && response.assets.length > 0) {
+                  const newAssets = response.assets;
+                  const total = images.length + newAssets.length;
+                  if (total <= 5) {
+                    setImages(prev => [...prev, ...newAssets]);
+                  } else {
+                    Toast.show({
+                      type: 'error',
+                      text1: 'Limit Exceeded',
+                      text2: 'You can only upload up to 5 images.',
+                    });
+                  }
+                }
+              },
+            );
+          },
+        },
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+      ],
+      {cancelable: true},
+    );
   };
 
   const onMapPress = (e: MapPressEvent) => {
@@ -182,13 +230,26 @@ export default function CreateProduct() {
       />
       {errors.price && <Text style={styles.error}>{errors.price.message}</Text>}
 
-      <TouchableOpacity onPress={pickImages} style={styles.imagePicker}>
-        <Text style={{color: colors.textColor}}>Pick Images (Max 5)</Text>
-      </TouchableOpacity>
+      <Button
+        title="Pick Images (Max 5)"
+        onPress={pickImages}
+        variant="confirm" // or "confirm" / "default" based on your style system
+        style={styles.imagePicker}
+      />
 
       <ScrollView horizontal>
         {images.map((img, i) => (
-          <Image key={i} source={{uri: img.uri}} style={styles.imagePreview} />
+          <View key={i} style={styles.imageWrapper}>
+            <Image source={{uri: img.uri}} style={styles.imagePreview} />
+            <TouchableOpacity
+              style={styles.removeIcon}
+              onPress={() => {
+                const filtered = images.filter((_, index) => index !== i);
+                setImages(filtered);
+              }}>
+              <Text style={styles.removeIconText}>×</Text>
+            </TouchableOpacity>
+          </View>
         ))}
       </ScrollView>
 
