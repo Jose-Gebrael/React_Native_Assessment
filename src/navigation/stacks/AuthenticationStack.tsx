@@ -1,6 +1,6 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {Login, CreateAccount, OTP} from '../../screens';
+import {Login, CreateAccount, OTP, ForgotPassword} from '../../screens';
 import {AuthenticationStackParamList} from '../../types/navigation.types';
 
 const Stack = createNativeStackNavigator<AuthenticationStackParamList>();
@@ -24,6 +24,7 @@ export default function AuthenticationStack() {
         component={CreateAccount}
       />
       <Stack.Screen name="OTP" component={OTP} />
+      <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
     </Stack.Navigator>
   );
 }

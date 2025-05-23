@@ -12,7 +12,6 @@ import {AppStackNavigationProp} from '../types/navigation.types';
 import {useThemeStore} from '../store/themeStore';
 import {loginSchema, LoginFormData} from '../schemas/LoginSchema';
 import {useLoginMutation} from '../queries';
-import {useForgotPasswordMutation} from '../queries';
 import Toast from 'react-native-toast-message';
 import {AxiosError} from 'axios';
 
@@ -20,7 +19,6 @@ export default function Login() {
   const {colors} = useThemeStore();
   const {login} = useAuthStore();
   const {mutate: sendLogin} = useLoginMutation();
-  const {mutate: forgotPassword} = useForgotPasswordMutation();
   const navigation = useNavigation<AppStackNavigationProp>();
   const [loading, setLoading] = useState(false);
   const {
@@ -30,8 +28,8 @@ export default function Login() {
   } = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
-      email: '', //Empty this before Handing in assignment
-      password: '123123', //Empty this before Handing in assignment
+      email: '', //i should empty this before Handing in assignment
+      password: '', //this too
     },
   });
 
@@ -64,34 +62,10 @@ export default function Login() {
             type: 'error',
             text1: 'Login failed',
             text2:
-              error.response?.data?.error?.message || 'Invalid credentials! Keep trying',
+              error.response?.data?.error?.message ||
+              'Invalid credentials! Keep trying',
           });
           setLoading(false);
-        },
-      },
-    );
-  };
-
-  const handleForgotPassword = (email: string) => {
-    forgotPassword(
-      {email},
-      {
-        onSuccess: res => {
-          Toast.show({
-            type: 'success',
-            text1: 'Email Sent',
-            text2: res?.data?.message || 'Please check your inbox.',
-          });
-        },
-        onError: err => {
-          const error = err as AxiosError<any>;
-          Toast.show({
-            type: 'error',
-            text1: 'Failed to Send',
-            text2:
-              error.response?.data?.error?.message ||
-              'Could not send reset instructions.',
-          });
         },
       },
     );
@@ -146,7 +120,7 @@ export default function Login() {
       <Text style={[styles.forgotPasswordText, {color: colors.textColor}]}>
         Forgot your password?{' '}
         <Text
-          onPress={handleSubmit(data => handleForgotPassword(data.email))}
+          onPress={() => navigation.navigate('ForgotPassword')}
           style={[styles.linkText, {color: colors.textLinkColor}]}>
           Click Here.
         </Text>

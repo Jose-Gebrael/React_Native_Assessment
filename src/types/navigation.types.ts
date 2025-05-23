@@ -5,6 +5,7 @@ export type AuthenticationStackParamList = {
   Login: undefined;
   CreateAccount: undefined;
   OTP: {email: string};
+  ForgotPassword: undefined;
 };
 
 export type ProtectedStackParamList = {
