@@ -8,6 +8,7 @@ import {
   Dimensions,
   ActivityIndicator,
   Linking,
+  RefreshControl,
 } from 'react-native';
 import {useRoute, RouteProp, useNavigation} from '@react-navigation/native';
 import Feather from 'react-native-vector-icons/Feather';
@@ -55,6 +56,8 @@ export default function ProductDetails() {
     data: product,
     isLoading,
     error,
+    refetch,
+    isRefetching,
   } = useGetProductByIdFetch(productId, accessToken);
 
   const {data: profileData, isLoading: isProfileLoading} =
@@ -85,7 +88,16 @@ export default function ProductDetails() {
 
   return (
     <View style={[styles.container, {backgroundColor: colors.appBackground}]}>
-      <ScrollView style={styles.detailsContainer}>
+      <ScrollView
+        style={styles.detailsContainer}
+        refreshControl={
+          <RefreshControl
+            refreshing={isRefetching}
+            onRefresh={refetch}
+            tintColor={colors.textLinkColor}
+            colors={[colors.textLinkColor]}
+          />
+        }>
         <View style={styles.header}>
           <TouchableOpacity
             onPress={() => navigation.navigate('BottomTabs', {screen: 'Home'})}>
@@ -205,9 +217,9 @@ export default function ProductDetails() {
                 title="Edit"
                 variant="confirm"
                 style={styles.buttons}
-                onPress={() => {
-                  // TODO: Navigate to edit screen with productId
-                }}
+                onPress={() =>
+                  navigation.navigate('ProductEdit', {productId: product._id})
+                }
               />
               <Button
                 title={isDeleting ? 'Deleting...' : 'Delete'}

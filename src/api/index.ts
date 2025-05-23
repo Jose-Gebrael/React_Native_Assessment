@@ -11,3 +11,4 @@ export * from './searchProductAPI';
 export * from './getProductByIdAPI';
 export * from './createProductAPI';
 export * from './deleteProductAPI';
+export * from './updateProductAPI';

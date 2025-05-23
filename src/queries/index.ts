@@ -10,3 +10,4 @@ export * from './useSearchProductFetch';
 export * from './useGetProductByIdFetch';
 export * from './useCreateProductMutation';
 export * from './useDeleteProductMutation';
+export * from './useUpdateProductMutation';
