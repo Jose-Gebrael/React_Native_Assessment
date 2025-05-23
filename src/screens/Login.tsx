@@ -64,7 +64,7 @@ export default function Login() {
             type: 'error',
             text1: 'Login failed',
             text2:
-              error.response?.data?.error?.message || 'Invalid credentials',
+              error.response?.data?.error?.message || 'Invalid credentials! Keep trying',
           });
           setLoading(false);
         },

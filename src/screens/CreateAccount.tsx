@@ -46,9 +46,9 @@ export default function CreateAccount() {
     resolver: zodResolver(createAccountSchema),
     defaultValues: {
       email: '',
-      password: '123123',
-      firstName: 'firstName-R',
-      lastName: 'lastName-R',
+      password: '',
+      firstName: '',
+      lastName: '',
     },
   });
 

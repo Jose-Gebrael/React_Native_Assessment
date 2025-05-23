@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axiosInstance from './axiosInstance';
 
 export interface CreateUserPayload {
   email: string;
@@ -27,7 +27,7 @@ export const createUserAPI = async (data: CreateUserPayload) => {
     } as any);
   }
 
-  const response = await axios.post('https://backend-practice.eurisko.me/api/auth/signup', formData, {
+  const response = await axiosInstance.post('/auth/signup', formData, {
     headers: {
       'Content-Type': 'multipart/form-data',
     },

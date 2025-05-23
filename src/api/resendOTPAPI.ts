@@ -1,11 +1,11 @@
-import axios from 'axios';
+import axiosInstance from './axiosInstance';
 
 export interface ResendOTPPayload {
   email: string;
 }
 
 export const resendOTP = async ({email}: ResendOTPPayload) => {
-  const response = await axios.post('https://backend-practice.eurisko.me/api/auth/resend-verification-otp', {
+  const response = await axiosInstance.post('/auth/resend-verification-otp', {
     email,
   });
 

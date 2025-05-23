@@ -12,7 +12,11 @@ axiosInstance.interceptors.response.use(
     const originalRequest = error.config;
 
     // If access token expired
-    if (error.response?.status === 401 && !originalRequest._retry) {
+    if (
+      error.response?.status === 401 &&
+      error.response?.data?.error?.message === 'Token expired' &&
+      !originalRequest._retry
+    ) {
       originalRequest._retry = true;
 
       try {
@@ -30,12 +34,7 @@ axiosInstance.interceptors.response.use(
         const newRefreshToken = res.data.data.refreshToken;
 
         // Save new tokens
-        await useAuthStore
-          .getState()
-          .login(
-            newAccessToken,
-            newRefreshToken,
-          );
+        await useAuthStore.getState().login(newAccessToken, newRefreshToken);
 
         // Retry original request with new access token
         originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;

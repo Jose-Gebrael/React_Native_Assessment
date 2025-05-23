@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axiosInstance from './axiosInstance';
 
 export interface OTPPayload {
   email: string;
@@ -6,7 +6,7 @@ export interface OTPPayload {
 }
 
 export const otpVerification = async ({email, otp}: OTPPayload) => {
-  const response = await axios.post('https://backend-practice.eurisko.me/api/auth/verify-otp', {
+  const response = await axiosInstance.post('/auth/verify-otp', {
     email,
     otp,
   });

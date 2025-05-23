@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axiosInstance from './axiosInstance';
 
 export interface LoginPayload {
   email: string;
@@ -14,9 +14,6 @@ export interface LoginResponse {
 export const loginAPI = async (
   payload: LoginPayload,
 ): Promise<LoginResponse> => {
-  const response = await axios.post(
-    'https://backend-practice.eurisko.me/api/auth/login',
-    payload,
-  );
+  const response = await axiosInstance.post('/auth/login', payload);
   return response.data.data;
 };
