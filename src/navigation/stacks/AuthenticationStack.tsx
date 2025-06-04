@@ -12,6 +12,7 @@ export default function AuthenticationStack() {
         headerTransparent: true,
         headerShadowVisible: false,
         headerTitle: '',
+        animation: 'slide_from_right',
       }}>
       <Stack.Screen
         options={{headerShown: false}}
@@ -19,7 +20,7 @@ export default function AuthenticationStack() {
         component={Login}
       />
       <Stack.Screen
-        options={{headerShown: false}}
+        options={{headerShown: false, animation: 'slide_from_bottom'}}
         name="CreateAccount"
         component={CreateAccount}
       />

@@ -29,7 +29,7 @@ export default function Login() {
     resolver: zodResolver(loginSchema),
     defaultValues: {
       email: '', //i should empty this before Handing in assignment
-      password: '', //this too
+      password: '123123', //this too
     },
   });
 

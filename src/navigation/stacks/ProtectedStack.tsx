@@ -17,6 +17,7 @@ export default function ProtectedStack() {
       screenOptions={() => {
         const {colors} = useThemeStore.getState();
         return {
+          animation: 'slide_from_right',
           headerTransparent: true,
           headerShadowVisible: false,
           headerTitle: '',
@@ -42,9 +43,21 @@ export default function ProtectedStack() {
         component={ProductDetails}
         options={{headerShown: false}}
       />
-      <Stack.Screen name="ProfileEdit" component={ProfileEdit} />
-      <Stack.Screen name="CreateProduct" component={CreateProduct} />
-      <Stack.Screen name="ProductEdit" component={ProductEdit} />
+      <Stack.Screen
+        name="ProfileEdit"
+        component={ProfileEdit}
+        options={{animation: 'slide_from_bottom'}}
+      />
+      <Stack.Screen
+        name="CreateProduct"
+        component={CreateProduct}
+        options={{animation: 'slide_from_bottom'}}
+      />
+      <Stack.Screen
+        name="ProductEdit"
+        component={ProductEdit}
+        options={{animation: 'slide_from_bottom'}}
+      />
       <Stack.Screen name="MyProducts" component={MyProducts} />
     </Stack.Navigator>
   );

@@ -99,6 +99,43 @@ const styles = StyleSheet.create({
     width: 100,
     marginBottom: 20,
   },
+  modalPage: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.95)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  imgOverlay: {
+    position: 'absolute',
+    top: 40,
+    right: 20,
+    zIndex: 1,
+  },
+  imageLoading: {
+    position: 'absolute',
+    zIndex: 1,
+  },
+  imgViewUp: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  imgViewLow: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'relative',
+  },
+  IMGstyle: {
+    width: Dimensions.get('window').width * 0.95,
+    height: Dimensions.get('window').height * 0.6,
+    borderRadius: 10,
+  },
+  quantityInCart: {
+    textAlign: 'center',
+    marginBottom: 8,
+    fontSize: 16,
+  },
 });
 
 export default styles;
