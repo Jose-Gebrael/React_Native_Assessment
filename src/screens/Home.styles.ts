@@ -71,6 +71,13 @@ const styles = StyleSheet.create({
     marginRight: 20,
     fontWeight: 'bold',
   },
+  skeletonList: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    paddingHorizontal: 16,
+    marginTop: 10,
+  },
 });
 
 export default styles;

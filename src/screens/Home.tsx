@@ -3,20 +3,20 @@ import {
   View,
   FlatList,
   Text,
-  ActivityIndicator,
   RefreshControl,
+  TouchableOpacity,
 } from 'react-native';
 import styles from './Home.styles';
 import {TextInput} from '../components/atoms/TextInput';
 import {Title} from '../components/atoms/Title';
 import ProductCard from '../components/molecules/ProductCard/ProductCard';
+import SkeletonCard from '../components/molecules/SkeletonCard/SkeletonCard';
 import {useThemeStore} from '../store/themeStore';
 import {useAuthStore} from '../store/authStore';
 import {useGetProductsFetch, useSearchProductFetch} from '../queries';
 import {Product} from '../types/product.types';
 import Feather from 'react-native-vector-icons/Feather';
 import Modal from 'react-native-modal';
-import {TouchableOpacity} from 'react-native';
 import {useNavigation, useFocusEffect} from '@react-navigation/native';
 import {AppStackNavigationProp} from '../types/navigation.types';
 
@@ -44,6 +44,7 @@ export default function Home() {
   const [searchQuery, setSearchQuery] = useState('');
   const [isSearching, setIsSearching] = useState(false);
   const navigation = useNavigation<AppStackNavigationProp>();
+
   const headerRight = useCallback(
     () => (
       <CreateHeaderButton
@@ -99,8 +100,8 @@ export default function Home() {
     page,
     limit: 10,
     accessToken,
-    sortBy: sortBy,
-    order: order,
+    sortBy,
+    order,
   });
 
   useFocusEffect(
@@ -114,15 +115,14 @@ export default function Home() {
   const hasNextPage = data?.pagination?.hasNextPage ?? false;
 
   useEffect(() => {
-  if (data?.data) {
-    setAllProducts(prev => {
-      const ids = new Set(prev.map(p => p._id));
-      const newProducts = data.data.filter((p: Product) => !ids.has(p._id));
-      return page === 1 ? data.data : [...prev, ...newProducts];
-    });
-  }
-}, [data, page]);
-
+    if (data?.data) {
+      setAllProducts(prev => {
+        const ids = new Set(prev.map((p: Product) => p._id));
+        const newProducts = data.data.filter((p: Product) => !ids.has(p._id));
+        return page === 1 ? data.data : [...prev, ...newProducts];
+      });
+    }
+  }, [data, page]);
 
   const handleLoadMore = () => {
     if (!isFetching && hasNextPage) {
@@ -185,12 +185,10 @@ export default function Home() {
         }
         ListEmptyComponent={
           isFetching && page === 1 ? (
-            <View style={styles.loadingInitialContainer}>
-              <ActivityIndicator size="large" color={colors.textLinkColor} />
-              <Text
-                style={[styles.loadingInitialText, {color: colors.textColor}]}>
-                Loading Products...
-              </Text>
+            <View style={styles.skeletonList}>
+              {Array.from({length: 6}).map((_, idx) => (
+                <SkeletonCard key={idx} />
+              ))}
             </View>
           ) : (
             <View style={styles.noResultsContainer}>
@@ -204,15 +202,15 @@ export default function Home() {
         }
         ListFooterComponent={
           isFetching && hasNextPage ? (
-            <View style={styles.loadingMoreContainer}>
-              <ActivityIndicator size="small" color={colors.textLinkColor} />
-              <Text style={[styles.loadingMoreText, {color: colors.textColor}]}>
-                Loading more...
-              </Text>
+            <View style={styles.skeletonList}>
+              {Array.from({length: 4}).map((_, idx) => (
+                <SkeletonCard key={`footer-skeleton-${idx}`} />
+              ))}
             </View>
           ) : null
         }
       />
+
       <Modal
         isVisible={isFilterVisible}
         onBackdropPress={() => setIsFilterVisible(false)}>
