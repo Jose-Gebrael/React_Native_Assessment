@@ -26,6 +26,8 @@ export default function ProductCard({product}: ProductCardProps) {
       }>
       {product.images?.length > 0 ? (
         <Image
+          testID="product-image" // ✅ ADD THIS
+          accessibilityRole="image"
           source={{
             uri: `https://backend-practice.eurisko.me${product.images[0].url}`,
           }}
@@ -36,6 +38,7 @@ export default function ProductCard({product}: ProductCardProps) {
           <Text style={{color: colors.textColor}}>No Image</Text>
         </View>
       )}
+
       <Text
         style={[styles.productTitle, {color: colors.textColor}]}
         numberOfLines={1}>
