@@ -10,6 +10,7 @@ import {
   Linking,
   RefreshControl,
   Modal,
+  Share,
 } from 'react-native';
 import {useRoute, RouteProp, useNavigation} from '@react-navigation/native';
 import Feather from 'react-native-vector-icons/Feather';
@@ -98,6 +99,14 @@ export default function ProductDetails() {
 
   const quantityInCart = getQuantity(product._id);
 
+  const handleShare = async () => {
+    const deepLink = `react_native_assessment://product/${product._id}`;
+
+    await Share.share({
+      message: `Check out this product: ${deepLink}`,
+    });
+  };
+
   return (
     <>
       {/* Fullscreen Modal Swiper */}
@@ -174,7 +183,7 @@ export default function ProductDetails() {
                   style={[styles.icon, {color: colors.textColor}]}
                 />
               </TouchableOpacity>
-              <TouchableOpacity onPress={() => {}}>
+              <TouchableOpacity onPress={handleShare}>
                 <Feather
                   name="send"
                   size={24}
@@ -314,7 +323,9 @@ export default function ProductDetails() {
           <View style={styles.addToCartButton}>
             <Button
               title="Add to Cart"
-              onPress={() => addToCart(product._id, product.title, product.description)}
+              onPress={() =>
+                addToCart(product._id, product.title, product.description)
+              }
               variant="confirm"
             />
           </View>

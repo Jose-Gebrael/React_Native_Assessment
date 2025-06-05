@@ -20,6 +20,10 @@ export type ProtectedStackParamList = {
   MyProducts: undefined;
 };
 
+export type RootStackParamList = {
+  AuthenticationStack: NavigatorScreenParams<AuthenticationStackParamList>;
+  ProtectedStack: NavigatorScreenParams<ProtectedStackParamList>;
+};
 
 export type BottomTabsParamList = {
   Home: undefined;
