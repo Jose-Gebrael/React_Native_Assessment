@@ -25,7 +25,7 @@ axiosInstance.interceptors.response.use(
           'https://backend-practice.eurisko.me/api/auth/refresh-token',
           {
             refreshToken,
-            token_expires_in: '60m',
+            token_expires_in: '1y',
           },
         );
 

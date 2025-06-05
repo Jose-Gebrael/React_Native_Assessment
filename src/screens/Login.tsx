@@ -44,7 +44,7 @@ export default function Login() {
       {
         email: data.email,
         password: data.password,
-        token_expires_in: '60m',
+        token_expires_in: '1y',
       },
       {
         onSuccess: async res => {

@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "3391352918",
-    "project_id": "react-native-assessment-fccca",
-    "storage_bucket": "react-native-assessment-fccca.firebasestorage.app"
+    "project_number": "311052799895",
+    "project_id": "react-native-assessment-86893",
+    "storage_bucket": "react-native-assessment-86893.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:3391352918:android:e1f6b706daf3287e1dcbf7",
+        "mobilesdk_app_id": "1:311052799895:android:f5bcecca853492143f7ed2",
         "android_client_info": {
           "package_name": "com.react_native_assessment"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyC04Ux05Ep7Wr0A1zN7l57dNCoxOdtLx24"
+          "current_key": "AIzaSyDrziXREArwmpwuUS3S6xPWxCsm1hIJ7Js"
         }
       ],
       "services": {

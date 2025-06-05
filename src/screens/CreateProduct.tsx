@@ -20,6 +20,34 @@ import {
   CreateProductType,
 } from '../schemas/createProductSchema';
 
+function NotiTest(productTitle: string, productId: string) {
+  const playerId = '273aab24-a79a-44a7-8cba-000d30347eb0';
+
+  if (!playerId) {
+    console.warn('Player ID not available');
+    return;
+  }
+
+  fetch('https://onesignal.com/api/v1/notifications', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization:
+        'Basic os_v2_app_nsy63gxlnrd6zkivthxm5nosyosvad6jvi3uadfam7cfev6d5lsmusksp3mpqxbbosi2df3nwgwbrdttgdqifudmvns5esu47mctr4a', // NEVER expose this in production
+    },
+    body: JSON.stringify({
+      app_id: '6cb1ed9a-eb6c-47ec-a915-99eeceb5d2c3',
+      include_player_ids: [playerId],
+      headings: {en: 'Product Created!'},
+      contents: {en: `You just created: ${productTitle}. Click here to check it out!`},
+      url: `react_native_assessment://product/${productId}`,
+    }),
+  })
+    .then(res => res.json())
+    .then(res => console.log('Notification Sent:', res))
+    .catch(err => console.error('Notification Error:', err));
+}
+
 export default function CreateProduct() {
   const {colors} = useThemeStore();
   const {getAccessToken} = useAuthStore();
@@ -156,7 +184,13 @@ export default function CreateProduct() {
             text1: 'Product Created Successfully',
           });
 
+          const productTitle = proddata?.data?.title;
           const productId = proddata?.data?._id;
+
+          if (productTitle && productId) {
+            NotiTest(productTitle, productId);
+          }
+
           if (productId) {
             navigation.navigate('ProductDetails', {productId});
           }
