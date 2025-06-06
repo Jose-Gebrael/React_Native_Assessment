@@ -85,7 +85,7 @@ export default function Login() {
           <View>
             <TextInput
               iconName="mail"
-              placeholder="Enter your email (eurisko@gmail.com)"
+              placeholder="Enter your email"
               value={value}
               onChangeText={onChange}
               autoCapitalize="none"
@@ -104,7 +104,7 @@ export default function Login() {
           <View>
             <TextInput
               iconName="lock"
-              placeholder="Enter your password (academy2025)"
+              placeholder="Enter your password"
               value={value}
               onChangeText={onChange}
               isPassword={true}
