@@ -101,6 +101,9 @@ export default function ProductDetails() {
 
   const handleShare = async () => {
     const deepLink = `react_native_assessment://product/${product._id}`;
+    //Firebase dynamic links are deprecated.
+    //There doesnt seem to be other workarounds to make this clickable with free tools.
+    //the link is however in notifications, so clicking those will take you to the product.
 
     await Share.share({
       message: `Check out this product: ${deepLink}`,
