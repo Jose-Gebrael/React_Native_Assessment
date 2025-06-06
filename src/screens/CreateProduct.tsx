@@ -19,6 +19,7 @@ import {
   CreateProductSchema,
   CreateProductType,
 } from '../schemas/createProductSchema';
+import {ONESIGNAL_KEY, ONESIGNAL_APPID} from '@env';
 
 function NotiTest(productTitle: string, productId: string) {
   const playerId = '273aab24-a79a-44a7-8cba-000d30347eb0';
@@ -33,10 +34,10 @@ function NotiTest(productTitle: string, productId: string) {
     headers: {
       'Content-Type': 'application/json',
       Authorization:
-        'Basic os_v2_app_nsy63gxlnrd6zkivthxm5nosyosvad6jvi3uadfam7cfev6d5lsmusksp3mpqxbbosi2df3nwgwbrdttgdqifudmvns5esu47mctr4a', // NEVER expose this in production
+        `Basic ${ONESIGNAL_KEY}`, // NEVER expose this in production
     },
     body: JSON.stringify({
-      app_id: '6cb1ed9a-eb6c-47ec-a915-99eeceb5d2c3',
+      app_id: `${ONESIGNAL_APPID}`,
       include_player_ids: [playerId],
       headings: {en: 'Product Created!'},
       contents: {en: `You just created: ${productTitle}. Click here to check it out!`},

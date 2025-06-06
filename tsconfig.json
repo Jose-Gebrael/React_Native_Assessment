@@ -5,7 +5,9 @@
       "src/types",
       "./node_modules/@types"
     ],
-    "types": ["jest"],
+    "types": [
+      "jest"
+    ],
     "strict": true, // This ensures type safety
     "noImplicitAny": true, // No implicit any types
     "skipLibCheck": true, // Skip type checking of libraries
@@ -13,7 +15,8 @@
   },
   "include": [
     "src/**/*",
-    "src/types/**/*.d.ts"
+    "src/types/**/*.d.ts",
+    "env.d.ts"
   ],
   "exclude": [
     "node_modules",

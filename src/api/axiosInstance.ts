@@ -1,8 +1,9 @@
 import axios from 'axios';
 import {useAuthStore} from '../store/authStore';
+import {API_URL, API_REFRESH} from '@env';
 
 const axiosInstance = axios.create({
-  baseURL: 'https://backend-practice.eurisko.me/api',
+  baseURL: API_URL,
 });
 
 // Add interceptor for 401 responses
@@ -22,7 +23,7 @@ axiosInstance.interceptors.response.use(
         const refreshToken = await useAuthStore.getState().getRefreshToken();
 
         const res = await axios.post(
-          'https://backend-practice.eurisko.me/api/auth/refresh-token',
+          API_REFRESH,
           {
             refreshToken,
             token_expires_in: '1y',
