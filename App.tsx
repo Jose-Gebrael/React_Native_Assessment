@@ -27,7 +27,7 @@ const linking: LinkingOptions<RootStackParamList> = {
 export default function App() {
   //OneSignal.Debug.setLogLevel(LogLevel.Verbose);
   OneSignal.initialize('6cb1ed9a-eb6c-47ec-a915-99eeceb5d2c3');
-  OneSignal.Notifications.requestPermission(false);
+  OneSignal.Notifications.requestPermission(true);
 
   useEffect(() => {
     const init = async () => {

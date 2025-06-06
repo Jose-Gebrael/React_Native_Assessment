@@ -22,25 +22,19 @@ import {
 import {ONESIGNAL_KEY, ONESIGNAL_APPID} from '@env';
 
 function NotiTest(productTitle: string, productId: string) {
-  const playerId = '273aab24-a79a-44a7-8cba-000d30347eb0';
-
-  if (!playerId) {
-    console.warn('Player ID not available');
-    return;
-  }
-
   fetch('https://onesignal.com/api/v1/notifications', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      Authorization:
-        `Basic ${ONESIGNAL_KEY}`, // NEVER expose this in production
+      Authorization: `Basic ${ONESIGNAL_KEY}`, // NEVER expose this in production
     },
     body: JSON.stringify({
       app_id: `${ONESIGNAL_APPID}`,
-      include_player_ids: [playerId],
+      included_segments: ['All'],
       headings: {en: 'Product Created!'},
-      contents: {en: `You just created: ${productTitle}. Click here to check it out!`},
+      contents: {
+        en: `You just created: ${productTitle}. Click here to check it out!`,
+      },
       url: `react_native_assessment://product/${productId}`,
     }),
   })
